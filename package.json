@@ -26,7 +26,8 @@
     "format": "prettier --config .prettierrc --write .",
     "lint": "eslint . --ext .ts --ext .mts",
     "test:watch": "jest --watch",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "run:migration": "drizzle-kit generate:pg"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
