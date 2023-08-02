@@ -5,7 +5,7 @@ VALUES
     'c2d29867-3d0b-d497-9191-18a9d8ee7830',
     'Sours',
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z',
+    '2019-01-01T00:00:00.000Z'
   );
 
 INSERT INTO
@@ -35,7 +35,7 @@ VALUES
     1,
     'Add all ingredients to a shaker and dry shake for 10 seconds.',
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z',
+    '2019-01-01T00:00:00.000Z'
   ),
   (
     '85c9d2f3-fb95-43c5-8b8e-2ec4f4c1fa4e',
@@ -43,7 +43,7 @@ VALUES
     2,
     'Add ice to the shaker and shake again for 10 seconds.',
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z',
+    '2019-01-01T00:00:00.000Z'
   ),
   (
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
@@ -51,7 +51,7 @@ VALUES
     3,
     'Strain into a rocks glass over ice and garnish with a lemon zest.',
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z',
+    '2019-01-01T00:00:00.000Z'
   );
 
 INSERT INTO
