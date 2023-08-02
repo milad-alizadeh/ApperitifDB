@@ -8,6 +8,13 @@
       "when": 1691016161916,
       "tag": "0000_tan_mentor",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1691017134813,
+      "tag": "0001_gifted_shaman",
+      "breakpoints": true
     }
   ]
 }
