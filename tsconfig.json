@@ -20,5 +20,5 @@
     "noImplicitThis": false,
     "strictNullChecks": false
   },
-  "include": ["src/**/*", "__tests__/**/*", "**/*.config.ts"]
+  "include": ["src/**/*", "__tests__/**/*", "**/*.config.ts", "jest.config.tss"]
 }
