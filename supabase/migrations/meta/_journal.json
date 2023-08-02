@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1691016161916,
+      "tag": "0000_tan_mentor",
+      "breakpoints": true
+    }
+  ]
+}
