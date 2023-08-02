@@ -1,1 +1,0 @@
-ALTER TABLE "recipes_ingredients" RENAME COLUMN "text" TO "quantity";

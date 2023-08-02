@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "91d5fe80-ac6e-4272-9e3f-e7fdc557c86e",
+  "id": "5d65ccf8-6fb8-43a4-94c3-ee3ee2fcdc50",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -206,8 +206,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "text": {
-          "name": "text",
+        "quantity": {
+          "name": "quantity",
           "type": "integer",
           "primaryKey": false,
           "notNull": false

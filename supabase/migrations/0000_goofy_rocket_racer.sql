@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "recipes_categories" (
 CREATE TABLE IF NOT EXISTS "recipes_ingredients" (
 	"recipe_id" uuid,
 	"ingredient_id" uuid,
-	"text" integer,
+	"quantity" integer,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );

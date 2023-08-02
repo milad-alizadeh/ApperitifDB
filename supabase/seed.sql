@@ -46,8 +46,8 @@ VALUES
     '2019-01-01T00:00:00.000Z'
   ),
   (
+    'd35f129a-43a4-4bea-9f29-65566405c9a2',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    '4c403c4c-7eaf-4579-a50c-af0c9a5a05a9',
     3,
     'Strain into a rocks glass over ice and garnish with a lemon zest.',
     '2019-01-01T00:00:00.000Z',
@@ -100,10 +100,10 @@ VALUES
   );
 
 INSERT INTO
-  public.recipe_ingredients (
+  public.recipes_ingredients (
     recipe_id,
     ingredient_id,
-    amount,
+    quantity,
     created_at,
     updated_at
   )
