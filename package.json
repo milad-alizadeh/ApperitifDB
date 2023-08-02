@@ -27,7 +27,8 @@
     "lint": "eslint . --ext .ts --ext .mts",
     "test:watch": "jest --watch",
     "test": "jest --coverage",
-    "run:migration": "drizzle-kit generate:pg"
+    "migration:generate": "drizzle-kit generate:pg",
+    "migration:run": "supabase db reset"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
