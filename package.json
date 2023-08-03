@@ -27,7 +27,7 @@
     "lint": "eslint . --ext .ts --ext .mts",
     "test:watch": "jest --watch",
     "test": "jest --coverage",
-    "migration:generate": "drizzle-kit generate:pg",
+    "migration:generate": "drizzle-kit generate:pg && yarn generate:types",
     "migration:run": "supabase db reset",
     "generate:types": "supabase gen types typescript --local > database.types.ts"
   },
