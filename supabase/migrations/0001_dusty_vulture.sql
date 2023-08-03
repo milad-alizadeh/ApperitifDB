@@ -1,1 +1,0 @@
-ALTER TABLE "ingredients" ADD COLUMN "weight" integer;

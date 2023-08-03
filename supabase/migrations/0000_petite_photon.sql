@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS "ingredients" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text,
 	"unit" text,
+	"weight" integer,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS "recipes" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "recipes_categories" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"recipe_id" uuid,
 	"category_id" uuid,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
@@ -29,6 +31,7 @@ CREATE TABLE IF NOT EXISTS "recipes_categories" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "recipes_ingredients" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"recipe_id" uuid,
 	"ingredient_id" uuid,
 	"quantity" integer,

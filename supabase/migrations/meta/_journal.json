@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1691020748048,
-      "tag": "0000_goofy_rocket_racer",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1691022251348,
-      "tag": "0001_dusty_vulture",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1691027314606,
-      "tag": "0002_workable_microbe",
+      "when": 1691027802972,
+      "tag": "0000_petite_photon",
       "breakpoints": true
     }
   ]

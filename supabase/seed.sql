@@ -106,7 +106,25 @@ VALUES
   );
 
 INSERT INTO
+  public.recipes_categories (
+    id,
+    recipe_id,
+    category_id,
+    created_at,
+    updated_at
+  )
+VALUES
+  (
+    '7e4181cc-53c3-4ee5-9afc-574ccb847470',
+    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
+    'c2d29867-3d0b-d497-9191-18a9d8ee7830',
+    '2019-01-01T00:00:00.000Z',
+    '2019-01-01T00:00:00.000Z'
+  );
+
+INSERT INTO
   public.recipes_ingredients (
+    id,
     recipe_id,
     ingredient_id,
     quantity,
@@ -115,6 +133,7 @@ INSERT INTO
   )
 VALUES
   (
+    'adcafa16-a87e-47ce-9870-60e03dcc7f8e',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
     'a04e3700-5320-48de-a813-2d64bc184faf',
     30,
@@ -122,6 +141,7 @@ VALUES
     '2019-01-01T00:00:00.000Z'
   ),
   (
+    'f9cb17e9-5022-425e-a9ff-526c9547779c',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
     '0ecfd3a8-580b-4236-9ac7-02d7c7c1089d',
     60,
@@ -129,6 +149,7 @@ VALUES
     '2019-01-01T00:00:00.000Z'
   ),
   (
+    'fa9c3b99-a67d-4eeb-906e-20a15f3573ee',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
     '2cbafcb3-19de-4b00-848e-0979b32ec09e',
     2,
@@ -136,6 +157,7 @@ VALUES
     '2019-01-01T00:00:00.000Z'
   ),
   (
+    '63e50e5e-dae3-4bfa-b961-e5cf554e9d9d',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
     '9e536f62-c639-42af-afec-244f77b155ee',
     null,
@@ -143,6 +165,7 @@ VALUES
     '2019-01-01T00:00:00.000Z'
   ),
   (
+    '7e4181cc-53c3-4ee5-9afc-574ccb847470',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
     '82fb793b-0401-402d-a103-6eacde0ac434',
     22.5,
