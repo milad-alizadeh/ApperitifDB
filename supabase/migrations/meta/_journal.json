@@ -8,6 +8,13 @@
       "when": 1691020748048,
       "tag": "0000_goofy_rocket_racer",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1691022251348,
+      "tag": "0001_dusty_vulture",
+      "breakpoints": true
     }
   ]
 }
