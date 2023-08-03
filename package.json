@@ -28,7 +28,8 @@
     "test:watch": "jest --watch",
     "test": "jest --coverage",
     "migration:generate": "drizzle-kit generate:pg",
-    "migration:run": "supabase db reset"
+    "migration:run": "supabase db reset",
+    "generate:types": "supabase gen types typescript --local > database.types.ts"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
