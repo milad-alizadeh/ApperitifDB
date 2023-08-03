@@ -15,6 +15,13 @@
       "when": 1691022251348,
       "tag": "0001_dusty_vulture",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1691027314606,
+      "tag": "0002_workable_microbe",
+      "breakpoints": true
     }
   ]
 }

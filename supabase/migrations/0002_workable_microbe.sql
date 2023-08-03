@@ -1,0 +1,2 @@
+ALTER TABLE "recipes_categories" ADD COLUMN "id" uuid DEFAULT gen_random_uuid() NOT NULL;--> statement-breakpoint
+ALTER TABLE "recipes_ingredients" ADD COLUMN "id" uuid DEFAULT gen_random_uuid() NOT NULL;
