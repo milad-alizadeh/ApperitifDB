@@ -27,9 +27,8 @@
     "lint": "eslint . --ext .ts --ext .mts",
     "test:watch": "jest --watch",
     "test": "jest --coverage",
-    "migration:generate": "drizzle-kit generate:pg && yarn generate:types",
-    "migration:run": "supabase db reset",
-    "generate:types": "supabase gen types typescript --local > database.types.ts"
+    "migration:generate": "drizzle-kit generate:pg",
+    "migration:run": "supabase db reset"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
