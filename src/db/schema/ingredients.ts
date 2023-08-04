@@ -6,6 +6,7 @@ export const ingredients = pgTable('ingredients', {
   name: text('name'),
   unit: text('unit'),
   weight: integer('weight'),
+  imageUrl: text('image_url'),
   createdAt,
   updatedAt,
 })

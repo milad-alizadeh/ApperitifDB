@@ -61,7 +61,8 @@ INSERT INTO
     unit,
     weight,
     created_at,
-    updated_at
+    updated_at,
+    image_url
   )
 VALUES
   (
@@ -70,7 +71,8 @@ VALUES
     'ml',
     1,
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z'
+    '2019-01-01T00:00:00.000Z',
+    'https://source.unsplash.com/random/500×500/?egg'
   ),
   (
     '0ecfd3a8-580b-4236-9ac7-02d7c7c1089d',
@@ -78,7 +80,8 @@ VALUES
     'ml',
     2,
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z'
+    '2019-01-01T00:00:00.000Z',
+    'https://source.unsplash.com/random/500×500/?bourbon'
   ),
   (
     '2cbafcb3-19de-4b00-848e-0979b32ec09e',
@@ -86,7 +89,8 @@ VALUES
     'dash',
     3,
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z'
+    '2019-01-01T00:00:00.000Z',
+    'https://source.unsplash.com/random/500×500/?bitters'
   ),
   (
     '9e536f62-c639-42af-afec-244f77b155ee',
@@ -94,7 +98,8 @@ VALUES
     null,
     4,
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z'
+    '2019-01-01T00:00:00.000Z',
+    'https://source.unsplash.com/random/500×500/?lemon'
   ),
   (
     '82fb793b-0401-402d-a103-6eacde0ac434',
@@ -102,7 +107,8 @@ VALUES
     'ml',
     5,
     '2019-01-01T00:00:00.000Z',
-    '2019-01-01T00:00:00.000Z'
+    '2019-01-01T00:00:00.000Z',
+    'https://source.unsplash.com/random/500×500/?sugar'
   );
 
 INSERT INTO
