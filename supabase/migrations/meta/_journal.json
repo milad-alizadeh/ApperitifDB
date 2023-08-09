@@ -22,6 +22,34 @@
       "when": 1691163783500,
       "tag": "0002_jazzy_joshua_kane",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1691538759867,
+      "tag": "0003_even_captain_midlands",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1691538983491,
+      "tag": "0004_tired_typhoid_mary",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1691539001784,
+      "tag": "0005_complete_zuras",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1691539138380,
+      "tag": "0006_late_morph",
+      "breakpoints": true
     }
   ]
 }
