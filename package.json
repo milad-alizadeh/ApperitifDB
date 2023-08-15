@@ -22,8 +22,8 @@
     "typescript": "~5.0"
   },
   "scripts": {
-    "dev": "nodemon ./index.ts",
-    "start": "ts-node src/index.ts",
+    "dev": "nodemon -r dotenv/config ./index.ts ",
+    "start": "ts-node -r dotenv/config src/index.ts",
     "format": "prettier --config .prettierrc --write .",
     "lint": "eslint . --ext .ts --ext .mts",
     "test:watch": "jest --watch",
@@ -34,6 +34,7 @@
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.27.2",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
