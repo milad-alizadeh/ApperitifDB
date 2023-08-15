@@ -23,18 +23,28 @@ const IngredientType = new GraphQLObjectType({
 
 const StepType = new GraphQLObjectType({
   name: 'Steps',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     number: { type: GraphQLString },
     description: { type: GraphQLString },
+    recipe: {
+      type: RecipeType,
+      resolve: async (parent) => {
+        return db
+          .select()
+          .from(recipes)
+          .where(eq(recipes.id, parent.recipeId))
+          .then((res) => res[0])
+      },
+    },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString },
-  },
+  }),
 })
 
 const RecipeType = new GraphQLObjectType({
   name: 'Recipe',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString },
     steps: {
@@ -46,7 +56,7 @@ const RecipeType = new GraphQLObjectType({
     imageUrl: { type: GraphQLString },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString },
-  },
+  }),
 })
 
 const RootQuery = new GraphQLObjectType({
@@ -71,6 +81,17 @@ const RootQuery = new GraphQLObjectType({
           .select()
           .from(recipes)
           .where(eq(recipes.id, args.id))
+          .then((res) => res[0])
+      },
+    },
+    steps: {
+      type: StepType,
+      args: { id: { type: GraphQLString } },
+      resolve: async (_parent, args: any): Promise<any> => {
+        return db
+          .select()
+          .from(steps)
+          .where(eq(steps.id, args.id))
           .then((res) => res[0])
       },
     },
