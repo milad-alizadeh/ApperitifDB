@@ -22,7 +22,7 @@
     "typescript": "~5.0"
   },
   "scripts": {
-    "dev": "nodemon -r dotenv/config ./index.ts ",
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" -r dotenv/config ./index.ts ",
     "start": "ts-node -r dotenv/config src/index.ts",
     "format": "prettier --config .prettierrc --write .",
     "lint": "eslint . --ext .ts --ext .mts",
