@@ -22,6 +22,7 @@
     "typescript": "~5.0"
   },
   "scripts": {
+    "dev": "nodemon ./index.ts",
     "start": "ts-node src/index.ts",
     "format": "prettier --config .prettierrc --write .",
     "lint": "eslint . --ext .ts --ext .mts",
@@ -34,6 +35,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "drizzle-orm": "^0.27.2",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^16.8.0",
+    "nodemon": "^3.0.1",
     "postgres": "^3.3.5"
   }
 }
