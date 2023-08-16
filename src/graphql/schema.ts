@@ -102,6 +102,38 @@ const RootQuery = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    editIngredient: {
+      type: IngredientType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) },
+        name: { type: GraphQLString },
+        weight: { type: GraphQLInt },
+        imageUrl: { type: GraphQLString },
+      },
+      resolve: (_parent, { id, name, weight, imageUrl }) => {
+        return db
+          .update(ingredients)
+          .set({
+            name,
+            weight,
+            imageUrl,
+          })
+          .where(eq(ingredients.id, id))
+          .returning()
+          .then((res) => res[0])
+      },
+    },
+    removeIngredients: {
+      type: IngredientType,
+      args: { id: { type: GraphQLString } },
+      resolve: (_parent, { id }) => {
+        return db
+          .delete(ingredients)
+          .where(eq(ingredients.id, id))
+          .returning()
+          .then((res) => res[0])
+      },
+    },
     addIngredient: {
       type: IngredientType,
       args: {
@@ -109,7 +141,7 @@ const mutation = new GraphQLObjectType({
         weight: { type: new GraphQLNonNull(GraphQLInt) },
         imageUrl: { type: GraphQLString },
       },
-      resolve: async (_parent, { name, weight, imageUrl }) => {
+      resolve: (_parent, { name, weight, imageUrl }) => {
         return db
           .insert(ingredients)
           .values({
