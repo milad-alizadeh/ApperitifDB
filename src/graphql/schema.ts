@@ -4,6 +4,7 @@ import {
   GraphQLInt,
   GraphQLSchema,
   GraphQLList,
+  GraphQLNonNull,
 } from 'graphql'
 import { db } from '../db'
 import { ingredients, recipes, steps } from '../db/schema'
@@ -98,6 +99,32 @@ const RootQuery = new GraphQLObjectType({
   },
 })
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addIngredient: {
+      type: IngredientType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        weight: { type: new GraphQLNonNull(GraphQLInt) },
+        imageUrl: { type: GraphQLString },
+      },
+      resolve: async (_parent, { name, weight, imageUrl }) => {
+        return db
+          .insert(ingredients)
+          .values({
+            name,
+            weight,
+            imageUrl,
+          })
+          .returning()
+          .then((res) => res[0])
+      },
+    },
+  },
+})
+
 export const schema = new GraphQLSchema({
   query: RootQuery,
+  mutation,
 })
