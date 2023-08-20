@@ -1,1 +1,0 @@
-ALTER TABLE "recipes_ingredients" ADD COLUMN "type" text DEFAULT 'main';

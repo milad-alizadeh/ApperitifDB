@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "525aadf2-b139-44ee-bf05-51131a6accda",
+  "id": "243dc692-d825-4dee-9ea3-c65e1caeb45f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -237,6 +237,13 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'main'"
         },
         "created_at": {
           "name": "created_at",
