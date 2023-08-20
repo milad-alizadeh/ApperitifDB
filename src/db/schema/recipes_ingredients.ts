@@ -1,4 +1,4 @@
-import { uuid, pgTable, real } from 'drizzle-orm/pg-core'
+import { uuid, pgTable, real, text } from 'drizzle-orm/pg-core'
 import { createdAt, updatedAt } from '../helpers'
 import { recipes } from './recipes'
 import { ingredients } from './ingredients'
@@ -10,6 +10,7 @@ export const recipesIngredients = pgTable('recipes_ingredients', {
   ingredientId: uuid('ingredient_id').references(() => ingredients.id),
   quantity: real('quantity'),
   unitId: uuid('unit_id').references(() => units.id),
+  type: text('type').default('main'),
   createdAt,
   updatedAt,
 })
