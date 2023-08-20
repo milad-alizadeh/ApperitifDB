@@ -28,7 +28,8 @@
     "test:watch": "jest --watch",
     "test": "jest --coverage",
     "migration:generate": "drizzle-kit generate:pg",
-    "migration:run": "supabase db reset"
+    "migration:run": "supabase db reset --debug",
+    "db:push": "supabase db push"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",

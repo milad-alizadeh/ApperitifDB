@@ -1,0 +1,1 @@
+comment on schema public is E'@graphql({"inflect_names": true})';
