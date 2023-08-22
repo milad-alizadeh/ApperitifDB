@@ -1,31 +1,51 @@
-INSERT INTO
-  public.categories (id, name, parent_id)
+-- categories.sql
+INSERT INTO public.categories (id, name, parent_id)
 VALUES
-  (
-    'c2d29867-3d0b-d497-9191-18a9d8ee7830',
-    'Sours',
-    null
-  ),
-  (
-    '4b95d60b-0d49-4382-a0e5-52376cd9ed9f',
-    'Whiskey',
-    '27caaf76-06fb-4c77-9fc5-e67f67a372e3'
-  ),
-  (
-    '27caaf76-06fb-4c77-9fc5-e67f67a372e3',
-    'Spirits',
-    null
-  );
+  (uuid_generate_v4(), 'Alcoholic Beverages', NULL),
+  (uuid_generate_v4(), 'Non-Alcoholic Beverages', NULL),
+  (uuid_generate_v4(), 'Vodka', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Gin', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Rum', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Tequila', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Scotch', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Bourbon', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Brandy', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Cognac', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Liqueurs', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Cocktails', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
+  (uuid_generate_v4(), 'Juices', (SELECT id FROM categories WHERE name = 'Non-Alcoholic Beverages'));
 
+-- recipes.sql
 INSERT INTO
   public.recipes (id, name, image_url)
 VALUES
   (
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    'Whiskey Sours',
-    'https://source.unsplash.com/random/500×500/?cocktails'
+    uuid_generate_v4(),
+    'Margarita',
+    'https://source.unsplash.com/random/500×500/?Margarita'
+  ),
+  (
+    uuid_generate_v4(),
+    'Mojito',
+    'https://source.unsplash.com/random/500×500/?Mojito'
+  ),
+  (
+    uuid_generate_v4(),
+    'Cosmopolitan',
+    'https://source.unsplash.com/random/500×500/?Cosmopolitan'
+  ),
+  (
+    uuid_generate_v4(),
+    'Old Fashioned',
+    'https://source.unsplash.com/random/500×500/?Old+Fashioned'
+  ),
+  (
+    uuid_generate_v4(),
+    'Martini',
+    'https://source.unsplash.com/random/500×500/?Martini'
   );
 
+-- steps.sql
 INSERT INTO
   public.steps(
     id,
@@ -35,100 +55,263 @@ INSERT INTO
   )
 VALUES
   (
-    'e0bd7b69-868f-4693-b405-950369cf0c10',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
     1,
-    'Add all ingredients to a shaker and dry shake for 10 seconds.'
+    'Rub the rim of the glass with the lime slice to make the salt stick to it. Take care to moisten only the outer rim and sprinkle the salt on it.'
   ),
   (
-    '85c9d2f3-fb95-43c5-8b8e-2ec4f4c1fa4e',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
     2,
-    'Add ice to the shaker and shake again for 10 seconds.'
+    'Shake the other ingredients with ice, then carefully pour into the glass (taking care not to dislodge any salt).'
   ),
   (
-    'd35f129a-43a4-4bea-9f29-65566405c9a2',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    3,
-    'Strain into a rocks glass over ice and garnish with a lemon zest'
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    1,
+    'Muddle mint leaves with sugar and lime juice.'
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    2,
+    'Add a splash of soda water and fill the glass with ice.'
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Cosmopolitan'),
+    1,
+    'Add all ingredients into a shaker with ice and shake.'
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    1,
+    'In a rocks glass, muddle the sugar, bitters, and water.'
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    2,
+    'Add the ice and bourbon and stir.'
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Martini'),
+    1,
+    'Add all ingredients into a shaker with ice and shake.'
   );
 
+-- units.sql
 INSERT INTO
   public.units (id, name)
 VALUES
   (
-    '4c403c4c-7eaf-4579-a50c-af0c9a5a05a9',
+    uuid_generate_v4(),
     'ml'
   ),
   (
-    'b3660fd3-75f2-4e88-a196-eb64b02d8fe4',
+    uuid_generate_v4(),
     'dash'
   ),
   (
-    '5c2f3854-4eb8-482a-b7ac-47842139da2c',
+    uuid_generate_v4(),
     'N/A'
   ),
   (
-    '3b0d354b-c091-449a-844b-0d64e00e1a24',
+    uuid_generate_v4(),
     'oz'
   ),
   (
-    '679f2e43-f302-4f99-928e-209086a41206',
+    uuid_generate_v4(),
     'part'
   );
 
+-- ingredients.sql
 INSERT INTO
   public.ingredients (id, name, weight, image_url)
 VALUES
   (
-    'a04e3700-5320-48de-a813-2d64bc184faf',
-    'Egg White',
+    uuid_generate_v4(),
+    'Lime Juice',
     1,
-    'https://source.unsplash.com/random/500×500/?egg'
+    'https://source.unsplash.com/random/500×500/?lime'
   ),
   (
-    '0ecfd3a8-580b-4236-9ac7-02d7c7c1089d',
-    'Bourbon',
+    uuid_generate_v4(),
+    'Tequila',
     2,
+    'https://source.unsplash.com/random/500×500/?tequila'
+  ),
+  (
+    uuid_generate_v4(),
+    'Triple Sec',
+    3,
+    'https://source.unsplash.com/random/500×500/?triple-sec'
+  ),
+  (
+    uuid_generate_v4(),
+    'Mint Leaves',
+    4,
+    'https://source.unsplash.com/random/500×500/?mint'
+  ),
+  (
+    uuid_generate_v4(),
+    'White Rum',
+    5,
+    'https://source.unsplash.com/random/500×500/?rum'
+  ),
+  (
+    uuid_generate_v4(),
+    'Sugar',
+    6,
+    'https://source.unsplash.com/random/500×500/?sugar'
+  ),
+  (
+    uuid_generate_v4(),
+    'Vodka',
+    7,
+    'https://source.unsplash.com/random/500×500/?vodka'
+  ),
+  (
+    uuid_generate_v4(),
+    'Gin',
+    8,
+    'https://source.unsplash.com/random/500×500/?gin'
+  ),
+  (
+    uuid_generate_v4(),
+    'Bourbon',
+    9,
     'https://source.unsplash.com/random/500×500/?bourbon'
   ),
   (
-    '2cbafcb3-19de-4b00-848e-0979b32ec09e',
+    uuid_generate_v4(),
     'Angostura Bitters',
-    3,
+    10,
     'https://source.unsplash.com/random/500×500/?bitters'
   ),
   (
-    '9e536f62-c639-42af-afec-244f77b155ee',
-    'Lemon Zest',
-    4,
-    'https://source.unsplash.com/random/500×500/?lemon'
+    uuid_generate_v4(),
+    'Cranberry Juice',
+    11,
+    'https://source.unsplash.com/random/500×500/?cranberry-juice'
   ),
   (
-    '82fb793b-0401-402d-a103-6eacde0ac434',
-    'Simple Syrup',
-    5,
-    'https://source.unsplash.com/random/500×500/?sugar'
+    uuid_generate_v4(),
+    'Orange Zest',
+    12,
+    'https://source.unsplash.com/random/500×500/?orange'
+  ),
+  (
+    uuid_generate_v4(),
+    'Sweet Vermouth',
+    13,
+    'https://source.unsplash.com/random/500×500/?vermouth'
   );
 
+-- recipes_categories.sql
 INSERT INTO
   public.recipes_categories (id, recipe_id, category_id)
 VALUES
   (
-    '7e4181cc-53c3-4ee5-9afc-574ccb847470',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    'c2d29867-3d0b-d497-9191-18a9d8ee7830'
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
+    (SELECT id FROM public.categories WHERE name = 'Tequila')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    (SELECT id FROM public.categories WHERE name = 'Rum')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Cosmopolitan'),
+    (SELECT id FROM public.categories WHERE name = 'Vodka')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    (SELECT id FROM public.categories WHERE name = 'Bourbon')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Martini'),
+    (SELECT id FROM public.categories WHERE name = 'Gin')
   );
 
+-- ingredients_categories.sql
 INSERT INTO
   public.ingredients_categories (id, ingredient_id, category_id)
 VALUES
   (
-    'b41fa0d1-25b2-4248-bd45-af8d68e41b6f',
-    '0ecfd3a8-580b-4236-9ac7-02d7c7c1089d',
-    '4b95d60b-0d49-4382-a0e5-52376cd9ed9f'
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Lime Juice'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Tequila'),
+    (SELECT id FROM public.categories WHERE name = 'Tequila')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Triple Sec'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Mint Leaves'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'White Rum'),
+    (SELECT id FROM public.categories WHERE name = 'Rum')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Sugar'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Vodka'),
+    (SELECT id FROM public.categories WHERE name = 'Vodka')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Gin'),
+    (SELECT id FROM public.categories WHERE name = 'Gin')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Bourbon'),
+    (SELECT id FROM public.categories WHERE name = 'Bourbon')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Angostura Bitters'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Cranberry Juice'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Orange Zest'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.ingredients WHERE name = 'Sweet Vermouth'),
+    (SELECT id FROM public.categories WHERE name = 'Cocktails')
   );
 
+-- recipes_ingredients.sql
 INSERT INTO
   public.recipes_ingredients (
     id,
@@ -139,37 +322,142 @@ INSERT INTO
   )
 VALUES
   (
-    'adcafa16-a87e-47ce-9870-60e03dcc7f8e',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    'a04e3700-5320-48de-a813-2d64bc184faf',
-    '4c403c4c-7eaf-4579-a50c-af0c9a5a05a9',
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
+    (SELECT id FROM public.ingredients WHERE name = 'Lime Juice'),
+    (SELECT id FROM public.units WHERE name = 'ml'),
     30
   ),
   (
-    'f9cb17e9-5022-425e-a9ff-526c9547779c',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    '0ecfd3a8-580b-4236-9ac7-02d7c7c1089d',
-    '3b0d354b-c091-449a-844b-0d64e00e1a24',
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
+    (SELECT id FROM public.ingredients WHERE name = 'Tequila'),
+    (SELECT id FROM public.units WHERE name = 'ml'),
     60
   ),
   (
-    'fa9c3b99-a67d-4eeb-906e-20a15f3573ee',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    '2cbafcb3-19de-4b00-848e-0979b32ec09e',
-    'b3660fd3-75f2-4e88-a196-eb64b02d8fe4',
-    2
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
+    (SELECT id FROM public.ingredients WHERE name = 'Triple Sec'),
+    (SELECT id FROM public.units WHERE name = 'ml'),
+    30
   ),
   (
-    '63e50e5e-dae3-4bfa-b961-e5cf554e9d9d',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    '9e536f62-c639-42af-afec-244f77b155ee',
-    '5c2f3854-4eb8-482a-b7ac-47842139da2c',
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Margarita'),
+    (SELECT id FROM public.ingredients WHERE name = 'Salt'),
+    (SELECT id FROM public.units WHERE name = 'N/A'),
     null
   ),
   (
-    '7e4181cc-53c3-4ee5-9afc-574ccb847470',
-    'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
-    '82fb793b-0401-402d-a103-6eacde0ac434',
-    '679f2e43-f302-4f99-928e-209086a41206',
-    22.5
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    (SELECT id FROM public.ingredients WHERE name = 'Mint Leaves'),
+    (SELECT id FROM public.units WHERE name = 'part'),
+    2
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    (SELECT id FROM public.ingredients WHERE name = 'Lime Juice'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    1
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    (SELECT id FROM public.ingredients WHERE name = 'White Rum'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    2
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    (SELECT id FROM public.ingredients WHERE name = 'Sugar'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    1
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Mojito'),
+    (SELECT id FROM public.ingredients WHERE name = 'Soda Water'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    2
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Cosmopolitan'),
+    (SELECT id FROM public.ingredients WHERE name = 'Vodka'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    1.5
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Cosmopolitan'),
+    (SELECT id FROM public.ingredients WHERE name = 'Cranberry Juice'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    1
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Cosmopolitan'),
+    (SELECT id FROM public.ingredients WHERE name = 'Lime Juice'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    0.5
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Cosmopolitan'),
+    (SELECT id FROM public.ingredients WHERE name = 'Triple Sec'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    0.5
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    (SELECT id FROM public.ingredients WHERE name = 'Sugar'),
+    (SELECT id FROM public.units WHERE name = 'dash'),
+    1
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    (SELECT id FROM public.ingredients WHERE name = 'Bourbon'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    2.5
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    (SELECT id FROM public.ingredients WHERE name = 'Angostura Bitters'),
+    (SELECT id FROM public.units WHERE name = 'dash'),
+    2
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Old Fashioned'),
+    (SELECT id FROM public.ingredients WHERE name = 'Water'),
+    (SELECT id FROM public.units WHERE name = 'dash'),
+    1
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Martini'),
+    (SELECT id FROM public.ingredients WHERE name = 'Gin'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    2.5
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Martini'),
+    (SELECT id FROM public.ingredients WHERE name = 'Dry Vermouth'),
+    (SELECT id FROM public.units WHERE name = 'oz'),
+    0.5
+  ),
+  (
+    uuid_generate_v4(),
+    (SELECT id FROM public.recipes WHERE name = 'Martini'),
+    (SELECT id FROM public.ingredients WHERE name = 'Olive'),
+    (SELECT id FROM public.units WHERE name = 'N/A'),
+    null
   );
