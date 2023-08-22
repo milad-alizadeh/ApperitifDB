@@ -1,9 +1,20 @@
 INSERT INTO
-  public.categories (id, name)
+  public.categories (id, name, parent_id)
 VALUES
   (
     'c2d29867-3d0b-d497-9191-18a9d8ee7830',
-    'Sours'
+    'Sours',
+    null
+  ),
+  (
+    '4b95d60b-0d49-4382-a0e5-52376cd9ed9f',
+    'Whiskey',
+    '27caaf76-06fb-4c77-9fc5-e67f67a372e3'
+  ),
+  (
+    '27caaf76-06fb-4c77-9fc5-e67f67a372e3',
+    'Spirits',
+    null
   );
 
 INSERT INTO
@@ -107,6 +118,15 @@ VALUES
     '7e4181cc-53c3-4ee5-9afc-574ccb847470',
     'f6a16ff7-4a31-11eb-be7b-8344edc8f36b',
     'c2d29867-3d0b-d497-9191-18a9d8ee7830'
+  );
+
+INSERT INTO
+  public.ingredients_categories (id, ingredient_id, category_id)
+VALUES
+  (
+    'b41fa0d1-25b2-4248-bd45-af8d68e41b6f',
+    '0ecfd3a8-580b-4236-9ac7-02d7c7c1089d',
+    '4b95d60b-0d49-4382-a0e5-52376cd9ed9f'
   );
 
 INSERT INTO
