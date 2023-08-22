@@ -2,18 +2,26 @@
 INSERT INTO public.categories (id, name, parent_id)
 VALUES
   (uuid_generate_v4(), 'Alcoholic Beverages', NULL),
-  (uuid_generate_v4(), 'Non-Alcoholic Beverages', NULL),
-  (uuid_generate_v4(), 'Vodka', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Gin', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Rum', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Tequila', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Scotch', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Bourbon', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Brandy', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Cognac', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Liqueurs', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Cocktails', (SELECT id FROM categories WHERE name = 'Alcoholic Beverages')),
-  (uuid_generate_v4(), 'Juices', (SELECT id FROM categories WHERE name = 'Non-Alcoholic Beverages'));
+  (uuid_generate_v4(), 'Non-Alcoholic Beverages', NULL);
+
+WITH alcoholic_id AS (
+  SELECT id FROM categories WHERE name = 'Alcoholic Beverages'
+), non_alcoholic_id AS (
+  SELECT id FROM categories WHERE name = 'Non-Alcoholic Beverages'
+)
+INSERT INTO public.categories (id, name, parent_id)
+VALUES
+  (uuid_generate_v4(), 'Vodka', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Gin', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Rum', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Tequila', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Scotch', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Bourbon', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Brandy', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Cognac', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Liqueurs', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Cocktails', (SELECT id FROM alcoholic_id)),
+  (uuid_generate_v4(), 'Juices', (SELECT id FROM non_alcoholic_id));
 
 -- recipes.sql
 INSERT INTO

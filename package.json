@@ -29,7 +29,7 @@
     "test": "jest --coverage",
     "migration:generate": "drizzle-kit generate:pg",
     "migration:run": "supabase db reset",
-    "db:push": "supabase db push"
+    "db:push": "supabase db push --include-all"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
