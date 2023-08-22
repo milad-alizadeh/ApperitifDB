@@ -4,7 +4,9 @@ import { createdAt, updatedAt } from '../helpers'
 export const categories = pgTable('categories', {
   id: uuid('id').defaultRandom().primaryKey(),
   name: text('name'),
-  parentId: uuid('parent_id').references(() => categories.id),
+  parentId: uuid('parent_id')
+    .default(null)
+    .references(() => categories.id),
   createdAt,
   updatedAt,
 })
