@@ -15,6 +15,13 @@
       "when": 1692738118052,
       "tag": "0001_uneven_riptide",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1692831176280,
+      "tag": "0002_equal_firebird",
+      "breakpoints": true
     }
   ]
 }

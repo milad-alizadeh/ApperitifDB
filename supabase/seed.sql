@@ -138,87 +138,99 @@ VALUES
 
 -- ingredients.sql
 INSERT INTO
-  public.ingredients (id, name, weight, image_url)
+  public.ingredients (id, name, weight, image_url, description)
 VALUES
   (
     uuid_generate_v4(),
     'Lime Juice',
     1,
-    'https://source.unsplash.com/random/500×500/?lime'
+    'https://source.unsplash.com/random/500×500/?lime',
+    'Freshly squeezed lime juice adds a bright, citrusy flavor to cocktails.'
   ),
   (
     uuid_generate_v4(),
     'Tequila',
     2,
-    'https://source.unsplash.com/random/500×500/?tequila'
+    'https://source.unsplash.com/random/500×500/?tequila',
+    'Tequila is a distilled spirit made from the blue agave plant, primarily produced in the area surrounding the city of Tequila, 65 km (40 mi) northwest of Guadalajara, and in the Jaliscan Highlands (Los Altos de Jalisco) of the central western Mexican state of Jalisco.'
   ),
   (
     uuid_generate_v4(),
     'Triple Sec',
     3,
-    'https://source.unsplash.com/random/500×500/?triple-sec'
+    'https://source.unsplash.com/random/500×500/?triple-sec',
+    'Triple sec is a sweet, colorless, orange-flavored liqueur.'
   ),
   (
     uuid_generate_v4(),
     'Mint Leaves',
     4,
-    'https://source.unsplash.com/random/500×500/?mint'
+    'https://source.unsplash.com/random/500×500/?mint',
+    'Mint leaves add a refreshing, herbal note to cocktails.'
   ),
   (
     uuid_generate_v4(),
     'White Rum',
     5,
-    'https://source.unsplash.com/random/500×500/?rum'
+    'https://source.unsplash.com/random/500×500/?rum',
+    'White rum is a clear, light-bodied rum that is typically used in cocktails.'
   ),
   (
     uuid_generate_v4(),
     'Sugar',
     6,
-    'https://source.unsplash.com/random/500×500/?sugar'
+    'https://source.unsplash.com/random/500×500/?sugar',
+    'Sugar is a common sweetener used in cocktails.'
   ),
   (
     uuid_generate_v4(),
     'Vodka',
     7,
-    'https://source.unsplash.com/random/500×500/?vodka'
+    'https://source.unsplash.com/random/500×500/?vodka',
+    'Vodka is a clear, neutral spirit that is typically distilled from grains or potatoes.'
   ),
   (
     uuid_generate_v4(),
     'Gin',
     8,
-    'https://source.unsplash.com/random/500×500/?gin'
+    'https://source.unsplash.com/random/500×500/?gin',
+    'Gin is a distilled spirit that is flavored with juniper berries and other botanicals.'
   ),
   (
     uuid_generate_v4(),
     'Bourbon',
     9,
-    'https://source.unsplash.com/random/500×500/?bourbon'
+    'https://source.unsplash.com/random/500×500/?bourbon',
+    'Bourbon is a type of American whiskey that is distilled from a mash bill that is at least 51% corn.'
   ),
   (
     uuid_generate_v4(),
     'Angostura Bitters',
     10,
-    'https://source.unsplash.com/random/500×500/?bitters'
+    'https://source.unsplash.com/random/500×500/?bitters',
+    'Angostura bitters is a concentrated bitters made from a secret blend of herbs and spices.'
   ),
   (
     uuid_generate_v4(),
     'Cranberry Juice',
     11,
-    'https://source.unsplash.com/random/500×500/?cranberry-juice'
+    'https://source.unsplash.com/random/500×500/?cranberry-juice',
+    'Cranberry juice is a tart, fruity juice that is commonly used in cocktails.'
   ),
   (
     uuid_generate_v4(),
     'Orange Zest',
     12,
-    'https://source.unsplash.com/random/500×500/?orange'
+    'https://source.unsplash.com/random/500×500/?orange',
+    'Orange zest is the outermost layer of the orange peel, which contains flavorful oils that add a bright, citrusy note to cocktails.'
   ),
   (
     uuid_generate_v4(),
     'Sweet Vermouth',
     13,
-    'https://source.unsplash.com/random/500×500/?vermouth'
+    'https://source.unsplash.com/random/500×500/?vermouth',
+    'Sweet vermouth is a fortified wine that is flavored with herbs and spices.'
   );
-
 -- recipes_categories.sql
 INSERT INTO
   public.recipes_categories (id, recipe_id, category_id)
