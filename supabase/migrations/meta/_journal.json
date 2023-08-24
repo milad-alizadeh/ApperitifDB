@@ -22,6 +22,13 @@
       "when": 1692831176280,
       "tag": "0002_equal_firebird",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1692892091929,
+      "tag": "0003_sparkling_hellion",
+      "breakpoints": true
     }
   ]
 }

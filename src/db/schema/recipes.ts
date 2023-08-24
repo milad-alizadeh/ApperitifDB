@@ -5,6 +5,7 @@ export const recipes = pgTable('recipes', {
   id: uuid('id').defaultRandom().primaryKey(),
   name: text('name'),
   imageUrl: text('image_url'),
+  description: text('description'),
   createdAt,
   updatedAt,
 })
