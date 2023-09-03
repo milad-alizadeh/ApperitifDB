@@ -6,6 +6,43 @@ VALUES
   (uuid_generate_v4 (), 'Non-Alcoholic Beverages', NULL);
 
 
+-- content_apperitivo
+WITH
+  alcoholic_id AS (
+    SELECT
+      id
+    FROM
+      categories
+    WHERE
+      name = 'Alcoholic Beverages'
+  ),
+  non_alcoholic_id AS (
+    SELECT
+      id
+    FROM
+      categories
+    WHERE
+      name = 'Non-Alcoholic Beverages'
+  )
+INSERT INTO
+  public.content_apperitivo (id, name, content)
+SELECT
+  uuid_generate_v4 (),
+  'browse',
+  ('{"categories": [{ "id": "' || na.id || '"}, { "id": "' || a.id || '"}]}')::json
+FROM
+  non_alcoholic_id na,
+  alcoholic_id a
+UNION ALL
+SELECT
+  uuid_generate_v4 (),
+  'filter',
+  ('{"categories": [{ "id": "' || na.id || '"}, { "id": "' || a.id || '"}]}')::json
+FROM
+  non_alcoholic_id na,
+  alcoholic_id a;
+
+
 WITH
   alcoholic_id AS (
     SELECT
