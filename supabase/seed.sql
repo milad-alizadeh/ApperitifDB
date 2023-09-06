@@ -6,43 +6,6 @@ VALUES
   (uuid_generate_v4 (), 'Non-Alcoholic Beverages', NULL);
 
 
--- content_apperitivo
-WITH
-  alcoholic_id AS (
-    SELECT
-      id
-    FROM
-      categories
-    WHERE
-      name = 'Alcoholic Beverages'
-  ),
-  non_alcoholic_id AS (
-    SELECT
-      id
-    FROM
-      categories
-    WHERE
-      name = 'Non-Alcoholic Beverages'
-  )
-INSERT INTO
-  public.content_apperitivo (id, name, content)
-SELECT
-  uuid_generate_v4 (),
-  'browse',
-  ('{"categories": [{ "id": "' || na.id || '"}, { "id": "' || a.id || '"}]}')::json
-FROM
-  non_alcoholic_id na,
-  alcoholic_id a
-UNION ALL
-SELECT
-  uuid_generate_v4 (),
-  'filter',
-  ('{"categories": [{ "id": "' || na.id || '"}, { "id": "' || a.id || '"}]}')::json
-FROM
-  non_alcoholic_id na,
-  alcoholic_id a;
-
-
 WITH
   alcoholic_id AS (
     SELECT
@@ -173,6 +136,43 @@ VALUES
         non_alcoholic_id
     )
   );
+
+
+-- content_apperitivo
+WITH
+  alcoholic_id AS (
+    SELECT
+      id
+    FROM
+      categories
+    WHERE
+      name = 'Alcoholic Beverages'
+  ),
+  non_alcoholic_id AS (
+    SELECT
+      id
+    FROM
+      categories
+    WHERE
+      name = 'Tequila'
+  )
+INSERT INTO
+  public.content_apperitivo (id, name, content)
+SELECT
+  uuid_generate_v4 (),
+  'browse',
+  ('{"categories": [{ "id": "' || na.id || '"}, { "id": "' || a.id || '"}]}')::json
+FROM
+  non_alcoholic_id na,
+  alcoholic_id a
+UNION ALL
+SELECT
+  uuid_generate_v4 (),
+  'filter',
+  ('{"categories": [{ "id": "' || na.id || '"}, { "id": "' || a.id || '"}]}')::json
+FROM
+  non_alcoholic_id na,
+  alcoholic_id a;
 
 
 -- recipes.sql
@@ -879,34 +879,6 @@ VALUES
       FROM
         public.recipes
       WHERE
-        name = 'Margarita'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.ingredients
-      WHERE
-        name = 'Salt'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.units
-      WHERE
-        name = 'N/A'
-    ),
-    null
-  ),
-  (
-    uuid_generate_v4 (),
-    (
-      SELECT
-        id
-      FROM
-        public.recipes
-      WHERE
         name = 'Mojito'
     ),
     (
@@ -1010,34 +982,6 @@ VALUES
         name = 'oz'
     ),
     1
-  ),
-  (
-    uuid_generate_v4 (),
-    (
-      SELECT
-        id
-      FROM
-        public.recipes
-      WHERE
-        name = 'Mojito'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.ingredients
-      WHERE
-        name = 'Soda Water'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.units
-      WHERE
-        name = 'oz'
-    ),
-    2
   ),
   (
     uuid_generate_v4 (),
@@ -1243,34 +1187,6 @@ VALUES
       FROM
         public.recipes
       WHERE
-        name = 'Old Fashioned'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.ingredients
-      WHERE
-        name = 'Water'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.units
-      WHERE
-        name = 'dash'
-    ),
-    1
-  ),
-  (
-    uuid_generate_v4 (),
-    (
-      SELECT
-        id
-      FROM
-        public.recipes
-      WHERE
         name = 'Martini'
     ),
     (
@@ -1290,60 +1206,4 @@ VALUES
         name = 'oz'
     ),
     2.5
-  ),
-  (
-    uuid_generate_v4 (),
-    (
-      SELECT
-        id
-      FROM
-        public.recipes
-      WHERE
-        name = 'Martini'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.ingredients
-      WHERE
-        name = 'Dry Vermouth'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.units
-      WHERE
-        name = 'oz'
-    ),
-    0.5
-  ),
-  (
-    uuid_generate_v4 (),
-    (
-      SELECT
-        id
-      FROM
-        public.recipes
-      WHERE
-        name = 'Martini'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.ingredients
-      WHERE
-        name = 'Olive'
-    ),
-    (
-      SELECT
-        id
-      FROM
-        public.units
-      WHERE
-        name = 'N/A'
-    ),
-    null
   );
