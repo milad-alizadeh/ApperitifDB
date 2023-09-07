@@ -1,10 +1,8 @@
-import { uuid, pgTable, pgEnum, real } from 'drizzle-orm/pg-core'
+import { uuid, pgTable, text, real } from 'drizzle-orm/pg-core'
 import { createdAt, updatedAt } from '../helpers'
 import { recipes } from './recipes'
 import { ingredients } from './ingredients'
 import { units } from './units'
-
-const typeEnum = pgEnum('type', ['essential', 'optional'])
 
 export const recipesIngredients = pgTable('recipes_ingredients', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -12,7 +10,7 @@ export const recipesIngredients = pgTable('recipes_ingredients', {
   ingredientId: uuid('ingredient_id').references(() => ingredients.id),
   quantity: real('quantity'),
   unitId: uuid('unit_id').references(() => units.id),
-  type: typeEnum('type').default('essential'),
+  type: text('type').default('essential'),
   createdAt,
   updatedAt,
 })
