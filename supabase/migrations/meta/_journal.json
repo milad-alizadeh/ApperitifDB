@@ -36,6 +36,27 @@
       "when": 1693764035644,
       "tag": "0004_curvy_cobalt_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1694123742152,
+      "tag": "0005_moaning_shocker",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1694124080816,
+      "tag": "0006_material_sugar_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1694124616238,
+      "tag": "0007_light_hellfire_club",
+      "breakpoints": true
     }
   ]
 }
