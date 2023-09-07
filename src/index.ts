@@ -1,3 +1,1 @@
-import seed from './seed'
-
-seed()
+console.log('Hello World!')
