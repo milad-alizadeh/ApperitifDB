@@ -1,0 +1,17 @@
+export default [
+  { name: 'oz', isConvertable: true },
+  { name: 'ml', isConvertable: true },
+  { name: 'dash' },
+  { name: 'drop' },
+  { name: 'tsp' },
+  { name: 'tbsp' },
+  { name: 'cup', isConvertable: true },
+  { name: 'pint', isConvertable: true },
+  { name: 'shot' },
+  { name: 'grams', isConvertable: true },
+  { name: 'twist' },
+  { name: 'wheel' },
+  { name: 'wedge' },
+  { name: 'pinch' },
+  { name: 'rim' },
+]
