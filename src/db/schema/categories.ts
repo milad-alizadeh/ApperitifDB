@@ -4,6 +4,7 @@ import { createdAt, updatedAt } from '../helpers'
 export const categories = pgTable('categories', {
   id: uuid('id').defaultRandom().primaryKey(),
   name: text('name'),
+  imageUrl: text('image_url'),
   parentId: uuid('parent_id')
     .default(null)
     .references(() => categories.id),

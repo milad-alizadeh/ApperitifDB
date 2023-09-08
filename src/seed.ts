@@ -17,6 +17,7 @@ import sample from 'lodash/sample'
 import unitsData from './seedData/units'
 import quantities from './seedData/quantities'
 import stepsData from './seedData/steps'
+import { eq } from 'drizzle-orm'
 
 const client = postgres(
   'postgresql://postgres:postgres@localhost:54322/postgres',
@@ -31,16 +32,16 @@ const insertData = async (): Promise<void> => {
     .values(recipesData)
     .returning()
 
-  // Categories
-  const insertedCategories = await db
-    .insert(categories)
-    .values(categoriesData)
-    .returning()
-
   // Parent Categories
   const insertedParentCategories = await db
     .insert(categories)
     .values(parentCategoriesData)
+    .returning()
+
+  // Categories
+  const insertedCategories = await db
+    .insert(categories)
+    .values(categoriesData)
     .returning()
 
   // Ingredients
@@ -73,11 +74,15 @@ async function seedCategories(
     parentId: number,
   ): void => {
     insertedCategories.slice(start, end).forEach(async (category) => {
+      await db
+        .update(categories)
+        .set({ parentId })
+        .where(eq(categories.id, category.id))
+
       sampleSize(insertedRecipes, 10).forEach(async (recipe) => {
         const recipesCategoriesData = {
           recipeId: recipe.id,
           categoryId: category.id,
-          parentId: parentId,
           type: sample(['essential', 'optional']),
         }
         await db
@@ -122,6 +127,16 @@ async function seedRecipes(
   insertedUnits,
 ): Promise<void> {
   insertedRecipes.forEach(async (recipe) => {
+    // Steps
+    sampleSize(stepsData, 4).forEach(async (step, index) => {
+      const stepsData = {
+        recipeId: recipe.id,
+        number: index + 1,
+        description: step.description,
+      }
+      await db.insert(steps).values(stepsData).returning()
+    })
+
     sampleSize(insertedIngredients, 4).forEach(async (ingredient) => {
       const recipeIngredientsData = {
         recipeId: recipe.id,
@@ -136,16 +151,6 @@ async function seedRecipes(
         .insert(recipesIngredients)
         .values(recipeIngredientsData)
         .returning()
-
-      // Steps
-      sampleSize(stepsData, 4).forEach(async (step, index) => {
-        const stepsData = {
-          recipeId: recipe.id,
-          number: index + 1,
-          description: step.description,
-        }
-        await db.insert(steps).values(stepsData).returning()
-      })
     })
   })
 }
