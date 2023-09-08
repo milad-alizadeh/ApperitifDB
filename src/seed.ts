@@ -111,8 +111,14 @@ async function seedCategories(
 }
 
 async function seedContent(parentCategories): Promise<void> {
+  // Seed with the order of Top Picks, Mood, Base Spirit, Flavour
   const content = {
-    categories: parentCategories.map((category) => category.id),
+    categories: [
+      parentCategories[3].id,
+      parentCategories[0].id,
+      parentCategories[2].id,
+      parentCategories[1].id,
+    ],
   }
 
   await db
