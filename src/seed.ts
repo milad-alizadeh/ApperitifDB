@@ -18,6 +18,7 @@ import unitsData from './seedData/units'
 import quantities from './seedData/quantities'
 import stepsData from './seedData/steps'
 import { eq } from 'drizzle-orm'
+import random from 'lodash/random'
 
 const client = postgres(
   'postgresql://postgres:postgres@localhost:54322/postgres',
@@ -79,7 +80,7 @@ async function seedCategories(
         .set({ parentId })
         .where(eq(categories.id, category.id))
 
-      sampleSize(insertedRecipes, 10).forEach(async (recipe) => {
+      sampleSize(insertedRecipes, random(3, 20)).forEach(async (recipe) => {
         const recipesCategoriesData = {
           recipeId: recipe.id,
           categoryId: category.id,
@@ -99,7 +100,7 @@ async function seedCategories(
   insetRecipCategories(20, 29, insertedParentCategories[2].id)
 
   // Top Picks
-  sampleSize(insertedRecipes, 10).forEach(async (recipe) => {
+  sampleSize(insertedRecipes, 20).forEach(async (recipe) => {
     const recipesCategoriesData = {
       recipeId: recipe.id,
       categoryId: insertedParentCategories[3].id,
