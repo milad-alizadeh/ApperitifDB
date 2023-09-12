@@ -64,6 +64,13 @@
       "when": 1694131253615,
       "tag": "0008_public_madame_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1694484724251,
+      "tag": "0009_fixed_mole_man",
+      "breakpoints": true
     }
   ]
 }
