@@ -31,7 +31,6 @@
     "migration:generate": "drizzle-kit generate:pg",
     "migration:run": "supabase db reset && yarn run seed",
     "db:push": "supabase db push --include-all --debug",
-    "run:drizzle-sutdio": "drizzle-kit studio --port 4000",
     "run:psql": "docker exec -it edf890f48472 psql -U postgres -s postgres",
     "run:log": "docker logs -f edf890f48472"
   },
