@@ -1,4 +1,4 @@
--- Drop the function if it already exists.
+-- Drop the function if it already exists
 drop function if exists get_recipes_by_category_ids (uuid[], int, int);
 
 
