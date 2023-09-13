@@ -2,17 +2,19 @@
 drop function if exists get_recipes_by_category_ids (uuid[], int, int);
 
 
--- Define a custom type to represent a recipe preview.
+-- Drop the custom types if they already exist.
+drop type if exists recipes_page_info;
+
+
+-- Drop the recipe_preview type if it already exists.
 drop type if exists recipe_preview;
 
 
+-- Define a custom type to represent a recipe preview.
 create type recipe_preview as (id uuid, name text, image_url text);
 
 
 -- Define a custom type for the function's return value
-drop type if exists recipes_page_info;
-
-
 create type recipes_page_info as (
   recipes recipe_preview[],
   total_count int,
