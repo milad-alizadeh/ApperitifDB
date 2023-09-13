@@ -1,41 +1,51 @@
 import { execSync } from 'child_process'
-import { readFileSync } from 'fs'
-import { join } from 'path'
+import { readFileSync, writeFileSync } from 'fs'
+import { join, basename, extname } from 'path'
 
 const getChangedFiles = (): string[] => {
-  const result: string = execSync('git diff --cached --name-only', {
+  const gitDiffOutput = execSync('git diff --cached --name-only', {
     encoding: 'utf8',
   })
-  return result.trim().split('\n')
+  const allChangedFiles = gitDiffOutput.trim().split('\n')
+  const sqlChangedFiles = allChangedFiles.filter(
+    (file) => file.startsWith('supabase/postgres/') && file.endsWith('.sql'),
+  )
+
+  return sqlChangedFiles
+}
+
+const getBaseFileName = (filePath: string): string => {
+  const extension = extname(filePath)
+  return basename(filePath, extension)
+}
+
+const generateMigrationName = (baseName: string): string => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = (now.getMonth() + 1).toString().padStart(2, '0') // Months are 0 indexed
+  const date = now.getDate().toString().padStart(2, '0')
+  const hour = now.getHours().toString().padStart(2, '0')
+  const minute = now.getMinutes().toString().padStart(2, '0')
+  const second = now.getSeconds().toString().padStart(2, '0')
+
+  return `${year}${month}${date}${hour}${minute}${second}_${baseName}.sql`
 }
 
 const copyChangedContent = (filePath: string, migrationPath: string): void => {
   const content = readFileSync(filePath, 'utf8')
-  execSync(`echo "${content}" >> ${migrationPath}`)
+  writeFileSync(migrationPath, content)
 }
 
-const changedFiles = getChangedFiles()
+const main = (): void => {
+  const changedSqlFiles = getChangedFiles()
 
-const relevantFolders = ['functions', 'settings', 'types']
+  changedSqlFiles.forEach((filePath) => {
+    const baseName = getBaseFileName(filePath)
+    const migrationName = generateMigrationName(baseName)
+    const migrationPath = join('supabase', 'migrations', migrationName)
 
-const changedSqlFiles = changedFiles.filter(
-  (file) =>
-    relevantFolders.some((folder) =>
-      file.startsWith(join('supabase', 'postgress', folder)),
-    ) && file.endsWith('.sql'),
-)
-
-if (changedSqlFiles.length) {
-  const migrationName = `migration_${new Date().toISOString()}.sql` // This creates a migration name based on the current date and time. Adjust as needed.
-  const migrationPath = join(
-    'supabase',
-    'postgress',
-    'migrations',
-    migrationName,
-  )
-  execSync(`touch ${migrationPath}`) // Creates an empty migration file
-
-  changedSqlFiles.forEach((file) => {
-    copyChangedContent(file, migrationPath)
+    copyChangedContent(filePath, migrationPath)
   })
 }
+
+main()
