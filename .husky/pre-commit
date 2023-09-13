@@ -9,7 +9,7 @@ then
 
     # Create a Sqitch change
     # NOTE: Make sure you're in the directory where sqitch.conf resides
-    cd path_to_your_sqitch_directory
+    cd ./
     sqitch add $change_name --note "Auto-generated change for functions"
 
     # Deploy the change to your database
