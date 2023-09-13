@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "243dc692-d825-4dee-9ea3-c65e1caeb45f",
+  "id": "72cb2be6-5205-4832-a1ab-6e7350abf22a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -18,6 +18,76 @@
         "name": {
           "name": "name",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": null
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "categories_parent_id_categories_id_fk": {
+          "name": "categories_parent_id_categories_id_fk",
+          "tableFrom": "categories",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "content_apperitivo": {
+      "name": "content_apperitivo",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "content": {
+          "name": "content",
+          "type": "json",
           "primaryKey": false,
           "notNull": false
         },
@@ -58,14 +128,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "weight": {
-          "name": "weight",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image_url": {
-          "name": "image_url",
+        "description": {
+          "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -90,6 +154,77 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "ingredients_categories": {
+      "name": "ingredients_categories",
+      "schema": "",
+      "columns": {
+        "ingredient_id": {
+          "name": "ingredient_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ingredients_categories_ingredient_id_ingredients_id_fk": {
+          "name": "ingredients_categories_ingredient_id_ingredients_id_fk",
+          "tableFrom": "ingredients_categories",
+          "tableTo": "ingredients",
+          "columnsFrom": [
+            "ingredient_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "ingredients_categories_category_id_categories_id_fk": {
+          "name": "ingredients_categories_category_id_categories_id_fk",
+          "tableFrom": "ingredients_categories",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "ingredients_categories_ingredient_id_category_id": {
+          "name": "ingredients_categories_ingredient_id_category_id",
+          "columns": [
+            "ingredient_id",
+            "category_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
     "recipes": {
       "name": "recipes",
       "schema": "",
@@ -109,6 +244,12 @@
         },
         "image_url": {
           "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -137,13 +278,6 @@
       "name": "recipes_categories",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
         "recipe_id": {
           "name": "recipe_id",
           "type": "uuid",
@@ -200,20 +334,21 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "recipes_categories_recipe_id_category_id": {
+          "name": "recipes_categories_recipe_id_category_id",
+          "columns": [
+            "recipe_id",
+            "category_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "recipes_ingredients": {
       "name": "recipes_ingredients",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
         "recipe_id": {
           "name": "recipe_id",
           "type": "uuid",
@@ -243,7 +378,7 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "default": "'main'"
+          "default": "'essential'"
         },
         "created_at": {
           "name": "created_at",
@@ -302,7 +437,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "recipes_ingredients_recipe_id_ingredient_id": {
+          "name": "recipes_ingredients_recipe_id_ingredient_id",
+          "columns": [
+            "recipe_id",
+            "ingredient_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "steps": {
@@ -383,7 +526,15 @@
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "'ml'"
+        },
+        "is_convertable": {
+          "name": "is_convertable",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         },
         "created_at": {
           "name": "created_at",

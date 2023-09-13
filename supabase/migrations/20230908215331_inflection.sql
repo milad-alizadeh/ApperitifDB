@@ -1,1 +1,0 @@
-comment on table "recipes_categories" is e'@graphql({"totalCount": {"enabled": true}})';

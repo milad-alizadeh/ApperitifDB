@@ -5,71 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1692566899367,
-      "tag": "0000_eager_reaper",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1692738118052,
-      "tag": "0001_uneven_riptide",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1692831176280,
-      "tag": "0002_equal_firebird",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1692892091929,
-      "tag": "0003_sparkling_hellion",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1693764035644,
-      "tag": "0004_curvy_cobalt_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1694123742152,
-      "tag": "0005_moaning_shocker",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1694124080816,
-      "tag": "0006_material_sugar_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1694124616238,
-      "tag": "0007_light_hellfire_club",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "5",
-      "when": 1694131253615,
-      "tag": "0008_public_madame_hydra",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "5",
-      "when": 1694484724251,
-      "tag": "0009_fixed_mole_man",
+      "when": 1694632500333,
+      "tag": "0000_secret_surge",
       "breakpoints": true
     }
   ]
