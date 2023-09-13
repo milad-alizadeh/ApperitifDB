@@ -1,0 +1,17 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Check if there are changes in the postgres/functions directory
+if git diff --cached --name-only | grep -qE "^supabase/postgres/functions/"
+then
+    # Generate a unique name for the change, like a timestamp
+    change_name="change_$(date +%Y%m%d%H%M%S)"
+
+    # Create a Sqitch change
+    # NOTE: Make sure you're in the directory where sqitch.conf resides
+    cd path_to_your_sqitch_directory
+    sqitch add $change_name --note "Auto-generated change for functions"
+
+    # Deploy the change to your database
+    sqitch deploy db:pg:your_database_name
+fi
