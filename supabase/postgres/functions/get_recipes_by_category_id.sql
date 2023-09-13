@@ -1,8 +1,18 @@
--- Define a custom type to represent a recipe preview
+-- Drop the function if it already exists.
+drop function if exists get_recipes_by_category_ids (uuid[], int, int);
+
+
+-- Define a custom type to represent a recipe preview.
+drop type if exists recipe_preview;
+
+
 create type recipe_preview as (id uuid, name text, image_url text);
 
 
 -- Define a custom type for the function's return value
+drop type if exists recipes_page_info;
+
+
 create type recipes_page_info as (
   recipes recipe_preview[],
   total_count int,
@@ -11,8 +21,7 @@ create type recipes_page_info as (
 
 
 -- Define a function to fetch recipes based on given category IDs and pagination parameters.
-create
-or replace function get_recipes_by_category_ids (
+create function get_recipes_by_category_ids (
   category_ids uuid[],
   page_number int,
   page_size int
