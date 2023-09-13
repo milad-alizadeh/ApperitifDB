@@ -1,4 +1,4 @@
--- Define a custom type to represent a recipe preview.
+-- Define a custom type to represent a recipe preview
 create type recipe_preview as (id uuid, name text, image_url text);
 
 
