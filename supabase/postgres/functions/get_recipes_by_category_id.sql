@@ -53,6 +53,7 @@ begin
             (is_empty_categories or rc.category_id = any(category_ids))
             and (
                 is_empty_search_term 
+                or position(search_term in r.name) > 0
                 or r.name % search_term
                 or i.name % search_term
             )
@@ -87,6 +88,7 @@ begin
         (is_empty_categories or rc.category_id = any(category_ids))
         and (
             is_empty_search_term 
+            or position(search_term in r.name) > 0
             or r.name % search_term
             or i.name % search_term
         );
