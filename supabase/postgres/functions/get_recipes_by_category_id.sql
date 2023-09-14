@@ -1,6 +1,6 @@
 -- set the similarity threshold for pg_trgm.
 set
-    pg_trgm.similarity_threshold = 0.2;
+    pg_trgm.similarity_threshold = 0.1;
 
 -- drop the function if it already exists
 drop function if exists get_recipes_by_category_ids (text, uuid[], int, int) cascade;
