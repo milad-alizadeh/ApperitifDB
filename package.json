@@ -32,8 +32,8 @@
     "migration:generate": "drizzle-kit generate:pg",
     "migration:run": "supabase db reset && yarn run seed",
     "db:push": "supabase db push --include-all --debug",
-    "run:psql": "docker exec -it edf890f48472 psql -U postgres -s postgres",
-    "run:log": "docker logs -f edf890f48472",
+    "run:psql": "docker exec -it e36ab3141941 psql -U postgres -s postgres",
+    "run:log": "docker logs -f e36ab3141941",
     "prepare": "husky install"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
