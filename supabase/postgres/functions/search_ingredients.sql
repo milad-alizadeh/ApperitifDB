@@ -8,7 +8,7 @@ drop type if exists ingredient_result cascade;
 create type ingredient_result as (id uuid, name text);
 
 -- create the function
-create function search_ingredients (search_term text) returns ingredient_result[] as $$
+create function search_ingredients (search_term text) returns setof ingredient_result as $$
 begin
     return query
     select id, name 
