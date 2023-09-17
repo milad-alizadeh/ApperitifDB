@@ -8,6 +8,7 @@ import { recipesIngredients } from '../src/db/schema/recipesIngredients'
 import { recipesCategories } from '../src/db/schema/recipesCategories'
 import { steps } from '../src/db/schema/steps'
 import { contentApperitivo } from '../src/db/schema/contentApperitivo'
+import { ingredientsCategories } from '../src/db/schema/ingredientsCategories'
 import recipesData from './seedData/recipes'
 import categoriesData from './seedData/categories'
 import parentCategoriesData from './seedData/parentCategories'
@@ -58,7 +59,12 @@ const insertData = async (): Promise<void> => {
   seedRecipes(insertedRecipes, insertedIngredients, insertedUnits)
 
   // Recipe Categories
-  seedCategories(insertedRecipes, insertedCategories, insertedParentCategories)
+  seedCategories(
+    insertedRecipes,
+    insertedCategories,
+    insertedParentCategories,
+    insertedIngredients,
+  )
 
   // Content
   seedContent(insertedParentCategories)
@@ -68,6 +74,7 @@ async function seedCategories(
   insertedRecipes,
   insertedCategories,
   insertedParentCategories,
+  insertedIngredients,
 ): Promise<void> {
   const insetRecipCategories = (
     start: number,
@@ -80,6 +87,7 @@ async function seedCategories(
         .set({ parentId })
         .where(eq(categories.id, category.id))
 
+      // Recipe Cateogrries
       sampleSize(insertedRecipes, random(3, 20)).forEach(async (recipe) => {
         const recipesCategoriesData = {
           recipeId: recipe.id,
@@ -91,6 +99,20 @@ async function seedCategories(
           .values(recipesCategoriesData)
           .returning()
       })
+
+      // Ingredients Categories
+      sampleSize(insertedIngredients, random(5, 20)).forEach(
+        async (ingredient) => {
+          const ingredientsCategoriesData = {
+            ingredientId: ingredient.id,
+            categoryId: category.id,
+          }
+          await db
+            .insert(ingredientsCategories)
+            .values(ingredientsCategoriesData)
+            .returning()
+        },
+      )
     })
   }
 
