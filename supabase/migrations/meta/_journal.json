@@ -8,6 +8,13 @@
       "when": 1694632500333,
       "tag": "0000_secret_surge",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1695065591792,
+      "tag": "0001_yielding_komodo",
+      "breakpoints": true
     }
   ]
 }
