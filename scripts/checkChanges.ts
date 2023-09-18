@@ -1,5 +1,5 @@
 import { execSync } from 'child_process'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync } from 'fs' // <-- Added existsSync
 import { join, basename, extname } from 'path'
 
 const getChangedFiles = (): string[] => {
@@ -40,6 +40,12 @@ const main = (): void => {
   const changedSqlFiles = getChangedFiles()
 
   changedSqlFiles.forEach((filePath) => {
+    if (!existsSync(filePath)) {
+      // <-- Check if the file exists
+      console.log(`File ${filePath} does not exist. Skipping...`)
+      return // Skip the current iteration if the file doesn't exist
+    }
+
     const baseName = getBaseFileName(filePath)
     const migrationName = generateMigrationName(baseName)
     const migrationPath = join('supabase', 'migrations', migrationName)
