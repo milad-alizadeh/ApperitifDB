@@ -1,4 +1,4 @@
--- set the similarity threshold for pg_trgm.
+-- set the similarity threshold for pg_trgm
 set
     pg_trgm.similarity_threshold = 0.1;
 
