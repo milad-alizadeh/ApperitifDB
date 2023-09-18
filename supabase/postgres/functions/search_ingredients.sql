@@ -1,4 +1,4 @@
--- drop the function if it already exists
+-- drop the function if it already exists.
 drop function if exists search_ingredients (text) cascade;
 
 -- drop the type if it already exists
