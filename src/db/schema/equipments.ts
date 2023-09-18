@@ -5,7 +5,7 @@ export const equipments = pgTable('equipments', {
   id: uuid('id').defaultRandom().primaryKey(),
   name: text('name'),
   description: text('description'),
-  imageUrl: text('imageUrl'),
+  imageUrl: text('image_url'),
   createdAt,
   updatedAt,
 })

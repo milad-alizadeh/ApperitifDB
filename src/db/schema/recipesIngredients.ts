@@ -11,7 +11,7 @@ export const recipesIngredients = pgTable(
     ingredientId: uuid('ingredient_id').references(() => ingredients.id),
     quantity: real('quantity'),
     unitId: uuid('unit_id').references(() => units.id),
-    isOptional: boolean('isOptional').default(false),
+    isOptional: boolean('is_optional').default(false),
     createdAt,
     updatedAt,
   },
