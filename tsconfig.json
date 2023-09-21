@@ -23,6 +23,7 @@
   "include": [
     "src/**/*",
     "scripts/**/*",
+    "supabase/**/*",
     "__tests__/**/*",
     "**/*.config.ts",
     "jest.config.tss"
