@@ -1,0 +1,2 @@
+ALTER TABLE profiles
+ADD CONSTRAINT fk_auth_users FOREIGN KEY (id) REFERENCES auth.users (id) ON DELETE CASCADE;
