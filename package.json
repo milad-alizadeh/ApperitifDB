@@ -31,11 +31,12 @@
     "test": "jest --coverage",
     "migration:generate": "drizzle-kit generate:pg",
     "migration:run": "supabase db reset && yarn run seed",
-    "db:push": "supabase db push --include-all --debug",
+    "db:staging:push": "supabase db push --include-all --debug",
+    "db:local:pull": "drizzle-kit introspect:pg",
     "run:psql": "docker exec -it e36ab3141941 psql -U postgres -s postgres",
     "run:log": "docker logs -f e36ab3141941",
     "prepare": "husky install",
-    "set:pg-password": "export PGPASSWORD='sAd67soh2qqYk4Ankd1E'",
+    "schema:push": "supabase schema push --schema public",
     "backup:staging": "pg_dump -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres --data-only -f backups/backup.sql postgres",
     "restore:staging": "psql -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql",
     "backup:local": "pg_dump -h localhost -p 5432 -U postgres --data-only -f backups/backup.sql postgres",
@@ -44,6 +45,7 @@
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.6",
     "lodash": "^4.17.21",
     "postgres": "^3.3.5"
