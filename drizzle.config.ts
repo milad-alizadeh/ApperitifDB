@@ -3,8 +3,6 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-console.log(process.env.DB_URL, 'url')
-
 export default {
   schema: './src/db/schema',
   out: './supabase/migrations',
@@ -12,4 +10,5 @@ export default {
   dbCredentials: {
     connectionString: process.env.DB_URL,
   },
+  schemaFilter: ['auth'],
 } satisfies Config
