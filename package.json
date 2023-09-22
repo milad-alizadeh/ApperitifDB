@@ -34,7 +34,12 @@
     "db:push": "supabase db push --include-all --debug",
     "run:psql": "docker exec -it e36ab3141941 psql -U postgres -s postgres",
     "run:log": "docker logs -f e36ab3141941",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "set:pg-password": "export PGPASSWORD='sAd67soh2qqYk4Ankd1E'",
+    "backup:staging": "pg_dump -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres --data-only -f backups/backup.sql postgres",
+    "restore:staging": "psql -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql",
+    "backup:local": "pg_dump -h localhost -p 5432 -U postgres --data-only -f backups/backup.sql postgres",
+    "restore:local": "psql -h localhost -p 5432 -U postgres -d postgres -f backups/backup.sql"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
