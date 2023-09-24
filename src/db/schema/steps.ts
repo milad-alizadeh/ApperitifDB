@@ -5,8 +5,8 @@ import { createdAt, updatedAt } from '../helpers'
 export const steps = pgTable('steps', {
   id: uuid('id').defaultRandom().primaryKey(),
   recipeId: uuid('recipe_id').references(() => recipes.id),
-  number: integer('number'),
-  description: text('description'),
+  number: integer('number').notNull(),
+  description: text('description').notNull(),
   createdAt,
   updatedAt,
 })

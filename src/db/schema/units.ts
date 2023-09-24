@@ -3,7 +3,7 @@ import { createdAt, updatedAt } from '../helpers'
 
 export const units = pgTable('units', {
   id: uuid('id').defaultRandom().primaryKey(),
-  name: text('name').default('ml'),
+  name: text('name').default('ml').notNull(),
   isConvertable: boolean('is_convertable').default(false),
   createdAt,
   updatedAt,

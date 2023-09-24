@@ -3,7 +3,7 @@ import { createdAt, updatedAt } from '../helpers'
 
 export const equipments = pgTable('equipments', {
   id: uuid('id').defaultRandom().primaryKey(),
-  name: text('name'),
+  name: text('name').notNull(),
   description: text('description'),
   imageUrl: text('image_url'),
   createdAt,
