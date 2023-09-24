@@ -1,32 +1,41 @@
-SELECT
+select
   create_trigger_for_table ('categories');
 
-SELECT
+select
   create_trigger_for_table ('content_apperitivo');
 
-SELECT
+select
   create_trigger_for_table ('equipments');
 
-SELECT
+select
+  create_trigger_for_table ('profiles');
+
+select
+  create_trigger_for_table ('profiles_recipes');
+
+select
+  create_trigger_for_table ('profiles_ingredients');
+
+select
   create_trigger_for_table ('ingredients_categories');
 
-SELECT
+select
   create_trigger_for_table ('ingredients');
 
-SELECT
+select
   create_trigger_for_table ('recipes_categories');
 
-SELECT
+select
   create_trigger_for_table ('recipes_equipments');
 
-SELECT
+select
   create_trigger_for_table ('recipes_ingredients');
 
-SELECT
+select
   create_trigger_for_table ('recipes');
 
-SELECT
+select
   create_trigger_for_table ('steps');
 
-SELECT
+select
   create_trigger_for_table ('units');
