@@ -36,6 +36,13 @@
       "when": 1695518209809,
       "tag": "0004_cool_doorman",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1695677563195,
+      "tag": "0005_tiny_bucky",
+      "breakpoints": true
     }
   ]
 }

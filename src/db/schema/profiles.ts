@@ -3,8 +3,7 @@ import { createdAt, updatedAt } from '../helpers'
 
 export const profiles = pgTable('profiles', {
   id: uuid('id').notNull().primaryKey(),
-  firstName: text('first_name'),
-  lastName: text('last_name'),
+  name: text('name'),
   email: text('email').unique(),
   createdAt,
   updatedAt,

@@ -37,9 +37,7 @@
     "prepare": "husky install",
     "schema:push": "supabase schema push --schema public",
     "backup:staging": "pg_dump -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres --data-only -f backups/backup.sql postgres",
-    "restore:staging": "psql -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql",
-    "backup:local": "pg_dump -h localhost -p 5432 -U postgres --data-only -f backups/backup.sql postgres",
-    "restore:local": "psql -h localhost -p 5432 -U postgres -d postgres -f backups/backup.sql"
+    "restore:staging": "psql -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
