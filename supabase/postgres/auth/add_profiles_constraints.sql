@@ -18,8 +18,8 @@ update using (auth.uid () = id);
 -- This trigger automatically creates a profile entry when a new user signs up via Supabase Auth.
 create function public.handle_new_user () returns trigger as $$
 begin
-  insert into public.profiles (id, first_name, last_name, email)
-  values (new.id, new.raw_user_meta_data->>'email', new.raw_user_meta_data->>'first_name', new.raw_user_meta_data->>'last_name');
+  insert into public.profiles (id, email, name)
+  values (new.id, new.raw_user_meta_data->>'email', new.raw_user_meta_data->>'name');
   return new;
 end;
 $$ language plpgsql security definer;
