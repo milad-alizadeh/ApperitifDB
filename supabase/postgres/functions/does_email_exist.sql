@@ -1,17 +1,16 @@
 create
-or replace function does_email_exist (email text) returns boolean language sql security definer
+or replace function does_email_exist (email text) returns boolean language plpgsql security definer
 set
   search_path = public stable as $$
 declare
-val text;
+    val text;
 begin
-   select u.email into val from profiles u
-   where u.email = lower($1);
+    select p.email into val from profiles p where p.email = lower($1);
 
-   if found then
-      return true;
-   else
-      return false;
-
+    if found then
+        return true;
+    else
+        return false;
+    end if;
 end;
 $$;
