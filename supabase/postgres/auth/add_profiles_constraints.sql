@@ -21,9 +21,9 @@ drop policy if exists "Users can update own profile." on profiles;
 
 alter table profiles enable row level security;
 
-create policy "Users can access their own favourite recipes." on profiles for all to authenticated using (auth.uid () = profile_id)
+create policy "Users can access their own favourite recipes." on profiles for all to authenticated using (auth.uid () = id)
 with
-  check (auth.uid () = profile_id);
+  check (auth.uid () = id);
 
 -- This trigger automatically creates a profile entry when a new user signs up via Supabase Auth.
 create
