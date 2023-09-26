@@ -15,20 +15,15 @@ alter table profiles enable row level security;
 
 drop policy if exists "Users can view their own profile." on profiles;
 
-create policy "Users can view their own profile." on profiles for
-select
-  using (auth.uid () = id);
-
 drop policy if exists "Users can insert their own profile." on profiles;
-
-create policy "Users can insert their own profile." on profiles for insert
-with
-  check (auth.uid () = id);
 
 drop policy if exists "Users can update own profile." on profiles;
 
-create policy "Users can update own profile." on profiles for
-update using (auth.uid () = id);
+alter table profiles enable row level security;
+
+create policy "Users can access their own favourite recipes." on profiles for all to authenticated using (auth.uid () = profile_id)
+with
+  check (auth.uid () = profile_id);
 
 -- This trigger automatically creates a profile entry when a new user signs up via Supabase Auth.
 create
