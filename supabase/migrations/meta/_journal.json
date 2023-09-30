@@ -43,6 +43,13 @@
       "when": 1695677563195,
       "tag": "0005_tiny_bucky",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1696107386826,
+      "tag": "0006_typical_rogue",
+      "breakpoints": true
     }
   ]
 }
