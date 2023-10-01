@@ -9,7 +9,7 @@ import { recipesCategories } from '../src/db/schema/recipesCategories'
 import { recipesEquipments } from '../src/db/schema/recipesEquipments'
 import { steps } from '../src/db/schema/steps'
 import { equipments } from '../src/db/schema/equipments'
-import { contentApperitivo } from '../src/db/schema/contentApperitivo'
+import { appContent } from '../src/db/schema/appContent'
 import { ingredientsCategories } from '../src/db/schema/ingredientsCategories'
 import recipesData from './seedData/recipes'
 import categoriesData from './seedData/categories'
@@ -167,12 +167,12 @@ async function seedContent(parentCategories): Promise<void> {
   }
 
   await db
-    .insert(contentApperitivo)
+    .insert(appContent)
     .values({ name: 'home', content: homeContent })
     .returning()
 
   await db
-    .insert(contentApperitivo)
+    .insert(appContent)
     .values({ name: 'filters', content: filterContent })
     .returning()
 }
