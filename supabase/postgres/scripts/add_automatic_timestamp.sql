@@ -2,7 +2,7 @@ select
   create_trigger_for_table ('categories');
 
 select
-  create_trigger_for_table ('content_apperitivo');
+  create_trigger_for_table ('app_content');
 
 select
   create_trigger_for_table ('equipments');
