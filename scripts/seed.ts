@@ -6,7 +6,9 @@ import { ingredients } from '../src/db/schema/ingredients'
 import { units } from '../src/db/schema/units'
 import { recipesIngredients } from '../src/db/schema/recipesIngredients'
 import { recipesCategories } from '../src/db/schema/recipesCategories'
+import { recipesEquipments } from '../src/db/schema/recipesEquipments'
 import { steps } from '../src/db/schema/steps'
+import { equipments } from '../src/db/schema/equipments'
 import { contentApperitivo } from '../src/db/schema/contentApperitivo'
 import { ingredientsCategories } from '../src/db/schema/ingredientsCategories'
 import recipesData from './seedData/recipes'
@@ -18,6 +20,7 @@ import sample from 'lodash/sample'
 import unitsData from './seedData/units'
 import quantities from './seedData/quantities'
 import stepsData from './seedData/steps'
+import equipmentsData from './seedData/equipments'
 import { eq } from 'drizzle-orm'
 import random from 'lodash/random'
 
@@ -52,11 +55,22 @@ const insertData = async (): Promise<void> => {
     .values(ingredientsData)
     .returning()
 
+  // Equipments
+  const insertedEquipments = await db
+    .insert(equipments)
+    .values(equipmentsData)
+    .returning()
+
   // Units
   const insertedUnits = await db.insert(units).values(unitsData).returning()
 
   // Recipes
-  seedRecipes(insertedRecipes, insertedIngredients, insertedUnits)
+  seedRecipes(
+    insertedRecipes,
+    insertedIngredients,
+    insertedUnits,
+    insertedEquipments,
+  )
 
   // Recipe Categories
   seedCategories(
@@ -167,6 +181,7 @@ async function seedRecipes(
   insertedRecipes,
   insertedIngredients,
   insertedUnits,
+  insertedEquipments,
 ): Promise<void> {
   insertedRecipes.forEach(async (recipe) => {
     // Steps
@@ -177,6 +192,19 @@ async function seedRecipes(
         description: step.description,
       }
       await db.insert(steps).values(stepsData).returning()
+    })
+
+    sampleSize(insertedEquipments, 4).forEach(async (equipment) => {
+      const recipeEquipmentsData = {
+        recipeId: recipe.id,
+        equipmentId: equipment.id,
+      }
+
+      // Recipe Ingredients
+      await db
+        .insert(recipesEquipments)
+        .values(recipeEquipmentsData)
+        .returning()
     })
 
     sampleSize(insertedIngredients, 4).forEach(async (ingredient) => {

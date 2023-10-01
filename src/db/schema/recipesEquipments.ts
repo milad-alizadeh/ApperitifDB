@@ -3,7 +3,7 @@ import { createdAt, updatedAt } from '../helpers'
 import { recipes } from './recipes'
 import { equipments } from './equipments'
 
-export const recipesequipment = pgTable(
+export const recipesEquipments = pgTable(
   'recipes_equipments',
   {
     recipeId: uuid('recipe_id').references(() => recipes.id),
