@@ -57,6 +57,13 @@
       "when": 1696202240984,
       "tag": "0007_thankful_switch",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1696266878691,
+      "tag": "0008_overconfident_loners",
+      "breakpoints": true
     }
   ]
 }

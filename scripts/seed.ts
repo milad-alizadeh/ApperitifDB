@@ -6,9 +6,9 @@ import { ingredients } from '../src/db/schema/ingredients'
 import { units } from '../src/db/schema/units'
 import { recipesIngredients } from '../src/db/schema/recipesIngredients'
 import { recipesCategories } from '../src/db/schema/recipesCategories'
-import { recipesEquipments } from '../src/db/schema/recipesEquipments'
+import { recipesEquipment } from '../src/db/schema/recipesEquipment'
 import { steps } from '../src/db/schema/steps'
-import { equipments } from '../src/db/schema/equipments'
+import { equipment } from '../src/db/schema/equipment'
 import { appContent } from '../src/db/schema/appContent'
 import { ingredientsCategories } from '../src/db/schema/ingredientsCategories'
 import recipesData from './seedData/recipes'
@@ -20,7 +20,7 @@ import sample from 'lodash/sample'
 import unitsData from './seedData/units'
 import quantities from './seedData/quantities'
 import stepsData from './seedData/steps'
-import equipmentsData from './seedData/equipments'
+import equipmentData from './seedData/equipment'
 import { eq } from 'drizzle-orm'
 import random from 'lodash/random'
 
@@ -55,10 +55,10 @@ const insertData = async (): Promise<void> => {
     .values(ingredientsData)
     .returning()
 
-  // Equipments
-  const insertedEquipments = await db
-    .insert(equipments)
-    .values(equipmentsData)
+  // Equipment
+  const insertedEquipment = await db
+    .insert(equipment)
+    .values(equipmentData)
     .returning()
 
   // Units
@@ -69,7 +69,7 @@ const insertData = async (): Promise<void> => {
     insertedRecipes,
     insertedIngredients,
     insertedUnits,
-    insertedEquipments,
+    insertedEquipment,
   )
 
   // Recipe Categories
@@ -181,7 +181,7 @@ async function seedRecipes(
   insertedRecipes,
   insertedIngredients,
   insertedUnits,
-  insertedEquipments,
+  insertedEquipment,
 ): Promise<void> {
   insertedRecipes.forEach(async (recipe) => {
     // Steps
@@ -194,17 +194,14 @@ async function seedRecipes(
       await db.insert(steps).values(stepsData).returning()
     })
 
-    sampleSize(insertedEquipments, 4).forEach(async (equipment) => {
-      const recipeEquipmentsData = {
+    sampleSize(insertedEquipment, 4).forEach(async (equipment) => {
+      const recipeEquipmentData = {
         recipeId: recipe.id,
         equipmentId: equipment.id,
       }
 
       // Recipe Ingredients
-      await db
-        .insert(recipesEquipments)
-        .values(recipeEquipmentsData)
-        .returning()
+      await db.insert(recipesEquipment).values(recipeEquipmentData).returning()
     })
 
     sampleSize(insertedIngredients, 4).forEach(async (ingredient) => {

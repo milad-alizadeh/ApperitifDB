@@ -1,8 +1,8 @@
-alter table content_apperitivo enable row level security;
+alter table app_content enable row level security;
 
-drop policy if exists "Contents are viewable by everyone." on content_apperitivo;
+drop policy if exists "Contents are viewable by everyone." on app_content;
 
-create policy "Contents are viewable by everyone." on content_apperitivo for
+create policy "Contents are viewable by everyone." on app_content for
 select
   to authenticated,
   anon using (true);

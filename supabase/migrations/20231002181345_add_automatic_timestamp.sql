@@ -2,7 +2,19 @@ select
   create_trigger_for_table ('categories');
 
 select
+  create_trigger_for_table ('app_content');
+
+select
   create_trigger_for_table ('equipment');
+
+select
+  create_trigger_for_table ('profiles');
+
+select
+  create_trigger_for_table ('profiles_recipes');
+
+select
+  create_trigger_for_table ('profiles_ingredients');
 
 select
   create_trigger_for_table ('ingredients_categories');
