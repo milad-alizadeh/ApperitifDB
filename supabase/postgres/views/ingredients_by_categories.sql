@@ -15,3 +15,5 @@ group by
   c.id
 order by
   c.name;
+
+comment on view "ingredients_by_categories" is e'@graphql({"primary_key_columns": ["id"]})';
