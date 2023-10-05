@@ -6,8 +6,16 @@ import { equipment } from './equipment'
 export const recipesEquipment = pgTable(
   'recipes_equipment',
   {
-    recipeId: uuid('recipe_id').references(() => recipes.id),
-    equipmentId: uuid('equipment_id').references(() => equipment.id),
+    recipeId: uuid('recipe_id')
+      .references(() => recipes.id, {
+        onDelete: 'cascade',
+      })
+      .notNull(),
+    equipmentId: uuid('equipment_id')
+      .references(() => equipment.id, {
+        onDelete: 'cascade',
+      })
+      .notNull(),
     createdAt,
     updatedAt,
   },
