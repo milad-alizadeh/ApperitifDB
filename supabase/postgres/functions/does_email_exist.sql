@@ -5,7 +5,7 @@ set
 declare
     val text;
 begin
-    select p.email into val from profiles p where p.email = lower($1);
+    select u.email into val from auth.users u where u.email = lower($1);
 
     if found then
         return true;
