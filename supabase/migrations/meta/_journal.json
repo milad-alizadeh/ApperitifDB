@@ -176,6 +176,13 @@
       "when": 1696545645174,
       "tag": "0024_thin_omega_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "5",
+      "when": 1696605926107,
+      "tag": "0025_chunky_lorna_dane",
+      "breakpoints": true
     }
   ]
 }
