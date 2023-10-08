@@ -1,5 +1,5 @@
 create or replace view
-  your_view_name as
+  available_recipes_for_profiles as
 with
   total_ingredients as (
     select
