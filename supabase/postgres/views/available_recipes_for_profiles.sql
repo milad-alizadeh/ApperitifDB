@@ -68,6 +68,8 @@ from
   matched_ingredients m
   join total_ingredients t on m.recipe_id = t.recipe_id
   left join missing_ingredients_data mid on m.profile_id = mid.profile_id
-  and m.recipe_id = mid.recipe_id;
+  and m.recipe_id = mid.recipe_id
+where
+  m.profile_id = auth.uid ();
 
 comment on view "available_recipes_for_profiles" is e'@graphql({"primary_key_columns": ["profile_id", "recipe_id"]})';
