@@ -65,7 +65,3 @@ from
   join total_ingredients t on m.recipe_id = t.recipe_id
   left join missing_ingredients_data mid on m.profile_id = mid.profile_id
   and m.recipe_id = mid.recipe_id
-order by
-  m.profile_id asc,
-  is_total_match desc,
-  m.recipe_name asc;
