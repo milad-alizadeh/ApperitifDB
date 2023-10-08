@@ -1,4 +1,6 @@
-create or replace view
+drop view if exists available_recipes_for_profiles;
+
+create view
   available_recipes_for_profiles as
 with
   total_ingredients as (
