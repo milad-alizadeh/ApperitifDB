@@ -17,6 +17,7 @@ with
     select
       p.id as profile_id,
       r.id as recipe_id,
+      r.image_url as recipe_image_url,
       r.name as recipe_name,
       array_agg(pi.ingredient_id) as matched_ingredients_array,
       count(pi.ingredient_id) as matched_ingredients_count
@@ -51,6 +52,7 @@ with
 select
   m.profile_id,
   m.recipe_id,
+  m.recipe_image_url,
   m.recipe_name,
   m.matched_ingredients_count,
   t.total_required_count,
