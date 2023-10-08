@@ -1,10 +1,11 @@
-create view
-  available_recipes_for_profiles as
+create or replace view
+  your_view_name as
 with
   total_ingredients as (
     select
       recipe_id,
-      array_agg(ingredient_id) as all_required_ingredients
+      array_agg(ingredient_id) as all_required_ingredients,
+      count(*) as total_required_count
     from
       recipes_ingredients
     where
@@ -29,34 +30,42 @@ with
       p.id,
       r.id,
       r.name
+  ),
+  missing_ingredients_data as (
+    select
+      m.profile_id,
+      m.recipe_id,
+      array_to_json(
+        array_agg(json_build_object('id', ing.id, 'name', ing.name))
+      ) as missing_ingredients
+    from
+      matched_ingredients m
+      join total_ingredients t on m.recipe_id = t.recipe_id
+      left join ingredients ing on ing.id = any (t.all_required_ingredients)
+    where
+      not ing.id = any (m.matched_ingredients_array)
+    group by
+      m.profile_id,
+      m.recipe_id
   )
 select
   m.profile_id,
   m.recipe_id,
   m.recipe_name,
   m.matched_ingredients_count,
-  array_length(t.all_required_ingredients, 1) as total_required_ingredients,
-  round(
-    (
-      cast(m.matched_ingredients_count as float) / array_length(t.all_required_ingredients, 1)
-    ) * 100
-  ) as match_percentage,
+  t.total_required_count,
+  m.matched_ingredients_count = t.total_required_count as is_total_match,
   case
-    when array_length(t.all_required_ingredients, 1) - m.matched_ingredients_count < 2 then true
+    when t.total_required_count - m.matched_ingredients_count < 2 then true
     else false
-  end as almost_makeable,
-  array_to_json(
-    array_agg(json_build_object('id', ing.id, 'name', ing.name))
-  ) as missing_ingredients
+  end as can_almost_make,
+  mid.missing_ingredients
 from
   matched_ingredients m
   join total_ingredients t on m.recipe_id = t.recipe_id
-  left join ingredients ing on ing.id = any (t.all_required_ingredients)
-where
-  not ing.id = any (m.matched_ingredients_array)
-group by
-  m.profile_id,
-  m.recipe_id,
-  m.recipe_name,
-  m.matched_ingredients_count,
-  t.all_required_ingredients;
+  left join missing_ingredients_data mid on m.profile_id = mid.profile_id
+  and m.recipe_id = mid.recipe_id
+order by
+  m.profile_id asc,
+  is_total_match desc,
+  m.recipe_name asc;
