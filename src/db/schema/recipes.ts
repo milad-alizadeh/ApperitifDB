@@ -1,4 +1,4 @@
-import { uuid, text, pgTable } from 'drizzle-orm/pg-core'
+import { uuid, text, pgTable, boolean } from 'drizzle-orm/pg-core'
 import { createdAt, updatedAt } from '../helpers'
 
 export const recipes = pgTable('recipes', {
@@ -6,6 +6,7 @@ export const recipes = pgTable('recipes', {
   name: text('name').notNull(),
   imageUrl: text('image_url'),
   description: text('description'),
+  isDraft: boolean('is_draft').default(false),
   createdAt,
   updatedAt,
 })
