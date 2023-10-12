@@ -3,7 +3,7 @@ name: Deploy Migrations to Staging
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
