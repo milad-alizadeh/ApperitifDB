@@ -36,7 +36,7 @@
     "schema:push": "supabase schema push --schema public",
     "db:backup:prod": "supabase db dump -f backups/backup.sql",
     "db:backup:prod:public": "supabase db dump -f backups/backup-data.sql --data-only --schema public",
-    "db:restore:prod": "psql -h db.kvtfspymzqsyhmvkzgej.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql"
+    "db:restore:prod": "psql -h db.ddecpwhqgsnixkhsyvyt.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
