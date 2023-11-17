@@ -29,14 +29,14 @@
     "db:migration:generate": "drizzle-kit generate:pg",
     "db:migration:run": "supabase db reset --debug && yarn run seed",
     "db:lint": "supabase db lint",
-    "db:prod:push": "supabase db push --include-all --debug",
     "run:psql": "docker exec -it e36ab3141941 psql -U postgres -s postgres",
     "run:log": "docker logs -f e36ab3141941",
     "prepare": "husky install",
+    "db:staging:push": "supabase db push --include-all --debug",
     "schema:push": "supabase schema push --schema public",
-    "db:backup:prod": "supabase db dump -f backups/backup.sql",
-    "db:backup:prod:public": "supabase db dump -f backups/backup-data.sql --data-only --schema public",
-    "db:restore:prod": "psql -h db.ddecpwhqgsnixkhsyvyt.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql"
+    "db:backup:staging": "supabase db dump -f backups/backup.sql",
+    "db:backup:staging:public": "supabase db dump -f backups/backup-data.sql --data-only --schema public",
+    "db:restore:staging": "psql -h db.ddecpwhqgsnixkhsyvyt.supabase.co -p 5432 -U postgres -d postgres --disable-triggers -f /backups/backup.sql"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
