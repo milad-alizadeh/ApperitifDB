@@ -7,8 +7,6 @@ import {
   MagickFormat,
 } from 'https://deno.land/x/imagemagick_deno/mod.ts'
 
-console.log(`Function "browser-with-cors" up and running!`)
-
 Deno.serve(async (req: any) => {
   // Enable CORS for browser-side requests
   if (req.method === 'OPTIONS') {
@@ -31,17 +29,17 @@ Deno.serve(async (req: any) => {
     {
       width: 160,
       height: 160,
-      name: 'thumb',
+      name: 'thumbnail',
     },
     {
       width: 320,
       height: 320,
-      name: 'thumb@2x',
+      name: 'thumbnail@2x',
     },
     {
       width: 480,
       height: 480,
-      name: 'thumb@3x',
+      name: 'thumbnail@3x',
     },
     {
       width: 400,
@@ -58,13 +56,13 @@ Deno.serve(async (req: any) => {
   // Generate random file name
   const fileName = Math.random().toString(36).substring(2, 15)
 
-  imageSizes.forEach(async ({ width, height, name }) => {
+  for (const { width, height, name } of imageSizes) {
     await ImageMagick.read(mainImage, async (img: IMagickImage) => {
       img.resize(width, height)
 
-      await img.write(MagickFormat.Jpeg, (resized: Uint8Array) => {
-        // Upload resiaed images to Supabase Storage
-        supabaseClient.storage
+      await img.write(MagickFormat.Jpeg, async (resized: Uint8Array) => {
+        // Upload resized images to Supabase Storage
+        await supabaseClient.storage
           .from('public-images')
           .upload(`${fileName}-${name}.jpg`, resized, {
             contentType: 'image/jpeg',
@@ -72,7 +70,7 @@ Deno.serve(async (req: any) => {
           })
       })
     })
-  })
+  }
 
   // Upload image to Supabase Storage
   const { data, error } = await supabaseClient.storage
