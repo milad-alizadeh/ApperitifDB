@@ -51,10 +51,21 @@ Deno.serve(async (req: any) => {
       height: 800,
       name: 'medium@2x',
     },
+    {
+      width: 800,
+      height: 800,
+      name: 'medium@2x',
+    },
+    {
+      width: 1024,
+      height: 1024,
+      name: '',
+    },
   ]
 
   // Generate random file name
   const fileName = Math.random().toString(36).substring(2, 15)
+  let error: { message: string; statusCode: number } | null = null
 
   for (const { width, height, name } of imageSizes) {
     await ImageMagick.read(mainImage, async (img: IMagickImage) => {
@@ -62,23 +73,19 @@ Deno.serve(async (req: any) => {
 
       await img.write(MagickFormat.Jpeg, async (resized: Uint8Array) => {
         // Upload resized images to Supabase Storage
-        await supabaseClient.storage
+        const { error: uploadError } = await supabaseClient.storage
           .from('public-images')
-          .upload(`${fileName}-${name}.jpg`, resized, {
+          .upload(`${fileName}${name ? `-${name}` : ''}.jpg`, resized, {
             contentType: 'image/jpeg',
             upsert: true,
           })
+
+        if (uploadError) {
+          error = uploadError
+        }
       })
     })
   }
-
-  // Upload image to Supabase Storage
-  const { data, error } = await supabaseClient.storage
-    .from('public-images')
-    .upload(`${fileName}.jpg`, mainImage, {
-      contentType: 'image/jpeg',
-      upsert: true,
-    })
 
   if (error) {
     return new Response(JSON.stringify(error.message), {
@@ -86,7 +93,7 @@ Deno.serve(async (req: any) => {
       status: error.statusCode,
     })
   } else {
-    return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify({ path: `${fileName}.jpg` }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
