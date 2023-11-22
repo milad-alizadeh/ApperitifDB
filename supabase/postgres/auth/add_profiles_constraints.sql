@@ -14,8 +14,8 @@ END $$;
 create
 or replace function public.handle_new_user () returns trigger as $$
 BEGIN
-  INSERT INTO public.profiles (id)
-  VALUES (NEW.id);
+  INSERT INTO public.profiles (id, role)
+  VALUES (NEW.id, 'user');
   RETURN NEW;
 END;
 $$ language plpgsql security definer;
