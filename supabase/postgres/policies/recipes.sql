@@ -16,7 +16,7 @@ create policy "Recipes are editable by admin users" on recipes for all to authen
     from
       profiles
     where
-      profiles.user_id = auth.uid ()
+      profiles.id = auth.uid ()
       and profiles.role = 'admin'
   )
 )
@@ -28,7 +28,7 @@ with
       from
         profiles
       where
-        profiles.user_id = auth.uid ()
+        profiles.id = auth.uid ()
         and profiles.role = 'admin'
     )
   );
