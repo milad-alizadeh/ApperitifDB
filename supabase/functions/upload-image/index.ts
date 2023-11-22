@@ -77,7 +77,7 @@ Deno.serve(async (req: any) => {
             .from('public-images')
             .upload(`${fileName}${name ? `-${name}` : ''}.jpg`, resized, {
               contentType: 'image/jpeg',
-              upsert: true,
+              upsert: false,
             })
 
           if (uploadError) {
