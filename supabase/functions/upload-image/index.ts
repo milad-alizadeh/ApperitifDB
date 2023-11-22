@@ -65,37 +65,36 @@ Deno.serve(async (req: any) => {
 
   // Generate random file name
   const fileName = Math.random().toString(36).substring(2, 15)
-  let error: { message: string; statusCode: number } | null = null
 
-  for (const { width, height, name } of imageSizes) {
-    await ImageMagick.read(mainImage, async (img: IMagickImage) => {
-      img.resize(width, height)
+  try {
+    for (const { width, height, name } of imageSizes) {
+      await ImageMagick.read(mainImage, async (img: IMagickImage) => {
+        img.resize(width, height)
 
-      await img.write(MagickFormat.Jpeg, async (resized: Uint8Array) => {
-        // Upload resized images to Supabase Storage
-        const { error: uploadError } = await supabaseClient.storage
-          .from('public-images')
-          .upload(`${fileName}${name ? `-${name}` : ''}.jpg`, resized, {
-            contentType: 'image/jpeg',
-            upsert: true,
-          })
+        await img.write(MagickFormat.Jpeg, async (resized: Uint8Array) => {
+          // Upload resized images to Supabase Storage
+          const { error: uploadError } = await supabaseClient.storage
+            .from('public-images')
+            .upload(`${fileName}${name ? `-${name}` : ''}.jpg`, resized, {
+              contentType: 'image/jpeg',
+              upsert: true,
+            })
 
-        if (uploadError) {
-          error = uploadError
-        }
+          if (uploadError) {
+            throw uploadError
+          }
+        })
       })
-    })
-  }
+    }
 
-  if (error) {
-    return new Response(JSON.stringify(error.message), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: error.statusCode,
-    })
-  } else {
     return new Response(JSON.stringify({ path: `${fileName}.jpg` }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
+    })
+  } catch (e) {
+    return new Response(JSON.stringify(e.message), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500,
     })
   }
 })
