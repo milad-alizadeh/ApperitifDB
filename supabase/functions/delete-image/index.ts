@@ -7,13 +7,25 @@ Deno.serve(async (req) => {
     return new Response('ok', { headers: corsHeaders })
   }
 
-  const { filename, bucket } = await req.json()
-
   // Setup Supabase client
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL') as string,
     Deno.env.get('SUPABASE_ANON_KEY') as string,
   )
+
+  const { filename, bucket } = await req.json()
+
+  console.log({ filename, bucket })
+
+  if (!filename || !bucket) {
+    return new Response(
+      JSON.stringify({ error: 'No filename or bucket provided' }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      },
+    )
+  }
 
   const { data, error } = await supabase.storage.from(bucket).list('', {
     limit: 100,
@@ -52,9 +64,3 @@ Deno.serve(async (req) => {
     status: 200,
   })
 })
-
-// To invoke:
-// curl -i --location --request POST 'http://localhost:54321/functions/v1/' \
-//   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-//   --header 'Content-Type: application/json' \
-//   --data '{"name":"Functions"}'
