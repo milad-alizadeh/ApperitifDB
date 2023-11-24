@@ -37,7 +37,8 @@
     "run:log": "docker logs -f e36ab3141941",
     "run:psql": "docker exec -it e36ab3141941 psql -U postgres -s postgres",
     "schema:push": "supabase schema push --schema public",
-    "supabase:functions:serve": "supabase functions serve"
+    "functions:serve": "supabase functions serve",
+    "generate:types": " npx supabase gen types typescript --project-id ddecpwhqgsnixkhsyvyt --schema public > supabase/functions/_shared/types.ts"
   },
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",

@@ -1,5 +1,6 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.5'
 import { corsHeaders } from '../_shared/cors.ts'
+import { Database } from '../_shared/types.ts'
 
 Deno.serve(async (req) => {
   // Enable CORS for browser-side requests
@@ -8,14 +9,12 @@ Deno.serve(async (req) => {
   }
 
   // Setup Supabase client
-  const supabase = createClient(
+  const supabase = createClient<Database>(
     Deno.env.get('SUPABASE_URL') as string,
     Deno.env.get('SUPABASE_ANON_KEY') as string,
   )
 
   const { filename, bucket } = await req.json()
-
-  console.log({ filename, bucket })
 
   if (!filename || !bucket) {
     return new Response(
@@ -46,7 +45,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  const filenames = data.map((item) => item.name)
+  const filenames = data.map((item: { name: string }) => item.name)
 
   const { data: deleteData, error: deleteError } = await supabase.storage
     .from(bucket)
