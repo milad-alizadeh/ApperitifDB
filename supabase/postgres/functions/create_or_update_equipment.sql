@@ -11,12 +11,13 @@ begin
     -- insert or update the e  quipment
     if is_new_equipment then
         insert into equipment (name, description)
-        values (payload ->> 'name', payload ->> 'description')
+        values (payload ->> 'name', payload ->> 'imageUrl', payload ->> 'description')
         returning equipment.id into v_equipment_id;
     else
         v_equipment_id := (payload ->> 'id')::uuid;
         update equipment
         set name = payload ->> 'name',
+            image_url = payload ->> 'imageUrl', 
             description = payload ->> 'description'
         where equipment.id = v_equipment_id;
     end if;
@@ -29,7 +30,7 @@ begin
     -- insert equipment categories
     for recipe_equipment in select * from json_array_elements(payload -> 'recipes')
     loop
-        insert into recipe_equipment (equipment_id, recipe_id)
+        insert into recipes_equipment (equipment_id, recipe_id)
         values (
                 v_equipment_id,
                 (recipe_equipment ->> 'id')::uuid
