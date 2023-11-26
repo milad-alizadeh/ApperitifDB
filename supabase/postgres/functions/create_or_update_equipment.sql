@@ -10,7 +10,7 @@ begin
 
     -- insert or update the e  quipment
     if is_new_equipment then
-        insert into equipment (name, description)
+        insert into equipment (name, image_url, description)
         values (payload ->> 'name', payload ->> 'imageUrl', payload ->> 'description')
         returning equipment.id into v_equipment_id;
     else
