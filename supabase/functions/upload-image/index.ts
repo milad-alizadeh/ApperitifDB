@@ -24,7 +24,15 @@ Deno.serve(async (req: any) => {
   const mainImage = new Uint8Array(await req.arrayBuffer())
 
   // Initialize ImageMagick
-  await initialize()
+  try {
+    await initialize()
+  } catch (initError) {
+    console.error('Error initializing ImageMagick:', initError)
+    return new Response(JSON.stringify({ error: initError.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500,
+    })
+  }
 
   // Generate random file name
   const fileName = Math.random().toString(36).substring(2, 15)
@@ -32,21 +40,33 @@ Deno.serve(async (req: any) => {
   try {
     for (const { width, height, name } of imageSizes) {
       await ImageMagick.read(mainImage, async (img: IMagickImage) => {
-        img.resize(width, height)
+        try {
+          img.resize(width, height)
 
-        await img.write(MagickFormat.Jpeg, async (resized: Uint8Array) => {
-          // Upload resized images to Supabase Storage
-          const { error: uploadError } = await supabaseClient.storage
-            .from('public-images')
-            .upload(`${fileName}${name ? `-${name}` : ''}.jpg`, resized, {
-              contentType: 'image/jpeg',
-              upsert: true,
-            })
+          console.log(`Processing ${fileName}${name ? `-${name}` : ''}.jpg`)
 
-          if (uploadError) {
-            throw uploadError
-          }
-        })
+          await img.write(MagickFormat.Jpeg, async (resized: Uint8Array) => {
+            try {
+              // Upload resized images to Supabase Storage
+              const { error: uploadError } = await supabaseClient.storage
+                .from('public-images')
+                .upload(`${fileName}${name ? `-${name}` : ''}.jpg`, resized, {
+                  contentType: 'image/jpeg',
+                  upsert: true,
+                })
+
+              if (uploadError) {
+                throw uploadError
+              }
+            } catch (uploadError) {
+              console.error('Error during upload:', uploadError)
+              throw uploadError
+            }
+          })
+        } catch (imgError) {
+          console.error('Error processing image:', imgError)
+          throw imgError
+        }
       })
     }
 
@@ -55,6 +75,7 @@ Deno.serve(async (req: any) => {
       status: 200,
     })
   } catch (e) {
+    console.error('General error:', e)
     return new Response(JSON.stringify({ error: e.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
