@@ -13,11 +13,15 @@ Deno.serve(async (req: any) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
+  const authHeader = req.headers.get('Authorization')!
+
+  console.log('Authorization:', authHeader)
 
   // Setup Supabase client
   const supabaseClient = createClient(
     Deno.env.get('SUPABASE_URL') as string,
     Deno.env.get('SUPABASE_ANON_KEY') as string,
+    { global: { headers: { Authorization: authHeader } } },
   )
 
   // Get image from request
