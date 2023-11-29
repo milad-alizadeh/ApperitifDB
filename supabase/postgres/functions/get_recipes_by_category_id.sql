@@ -1,6 +1,6 @@
 -- set the similarity threshold for pg_trgm
 set
-    pg_trgm.similarity_threshold = 0.1;
+  pg_trgm.similarity_threshold = 0.1;
 
 -- drop the function if it already exists
 drop function if exists get_recipes_by_category_ids (text, uuid[], int, int) cascade;
@@ -15,16 +15,16 @@ create type recipe_preview as (id uuid, name text, image_url text);
 
 -- define a custom type for the function's return value
 create type recipes_page_info as (
-    recipes recipe_preview[],
-    total_count int,
-    has_next_page boolean
+  recipes recipe_preview[],
+  total_count int,
+  has_next_page boolean
 );
 
 create function get_recipes_by_category_ids (
-    search_term text,
-    category_ids uuid[],
-    page_number int,
-    page_size int
+  search_term text,
+  category_ids uuid[],
+  page_number int,
+  page_size int
 ) returns recipes_page_info as $$
 declare
     total_count int;
@@ -77,7 +77,6 @@ begin
     into recipes_result
     from ordered_recipes;
 
-    -- compute the total count of matching recipes.
     select count(distinct r.id)
     into total_count
     from recipes r
