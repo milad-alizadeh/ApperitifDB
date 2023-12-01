@@ -5,16 +5,20 @@ drop function if exists search_ingredients (text) cascade;
 drop type if exists ingredient_result cascade;
 
 -- create the return type
-create type ingredient_result as (id uuid, name text);
+create type ingredient_result as (id uuid, name text, description text);
 
 -- create the function
 create function search_ingredients (search_term text) returns setof ingredient_result as $$
 begin
     return query
-    select distinct id, name 
+    select id, name, description
     from ingredients 
-    left join ingredients_categories ci on ingredients.id = ci.ingredient_id
-    where name % search_term
-    order by name;
+    where (name % search_term or to_tsvector('english', unaccent(description)) @@ to_tsquery('english', unaccent(search_term)))
+    order by 
+        case 
+            when name % search_term then 0
+            else 1
+        end,
+        name;
 end;
 $$ language plpgsql;
