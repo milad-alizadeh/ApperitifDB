@@ -22,43 +22,93 @@ create type recipes_page_info as (
 
 create function get_recipes_by_category_ids (
   search_term text,
-  category_ids uuid[],
+  category_groups jsonb,
   page_number int,
   page_size int
 ) returns recipes_page_info as $$
 declare
-    total_count int;
+    total_count int := 0;
     recipes_result recipe_preview[];
     page_info recipes_page_info;
-    is_empty_categories boolean := coalesce(array_length(category_ids, 1), 0) = 0;
+    is_empty_categories boolean := coalesce(jsonb_array_length(category_groups), 0) = 0;
     is_empty_search_term boolean := search_term is null or search_term = '';
+    recipes_query text := '';
+    count_query text := '';
+    category_condition text := '';
+    subquery text := '';
+    subcategories jsonb;
+    i int;
+    j int;
+    join_statements text := '';
+    where_condition text :='';
 begin
-    -- compute similarity scores for recipes based on search term.
+    raise log 'category_groups %', category_groups;
+    raise log 'is_empty_categories %', is_empty_categories;
+    -- Constructing filter logic based on category groups
+    if NOT is_empty_categories then
+        for i in 1..jsonb_array_length(category_groups) loop
+            subcategories := category_groups->(i-1);
+            subquery := 'select recipe_id from recipes_categories where category_id in (';
+
+            for j in 1..jsonb_array_length(subcategories) loop
+                subquery := subquery || quote_literal(subcategories->>j-1);
+                if j < jsonb_array_length(subcategories) then
+                    subquery := subquery || ', ';
+                end if;
+            end loop;
+
+            subquery := subquery || ')';
+            if i = 1 then
+                category_condition := 'r.id in (' || subquery || ')';
+            else
+                category_condition := category_condition || ' and r.id in (' || subquery || ')';
+            end if;
+        end loop;
+    end if;
+
+    -- Join statements for the main query and the total count
+    join_statements := '      
+      left join recipes_categories rc on r.id = rc.recipe_id
+      left join recipes_ingredients ri on r.id = ri.recipe_id
+      left join ingredients i on ri.ingredient_id = i.id
+    ';
+
+    -- Where condition
+    where_condition := 'where ';
+    
+    if NOT is_empty_categories then
+        where_condition := where_condition || category_condition || ' and ';
+    end if;
+
+    if is_empty_categories then
+        where_condition := where_condition || '(' || 
+            'position(' || quote_literal(search_term) || ' in r.name) > 0 or ' ||
+            'r.name % ' || quote_literal(search_term) || ' or ' ||
+            'i.name % ' || quote_literal(search_term) || ') ';
+    else
+        where_condition := rtrim(where_condition, ' and ');
+    end if;
+
+    -- Construct the full dynamic query
+    recipes_query := '
+    -- Create a similaraity score for searching recipes vs ingredients 
     with similarity_scores as (
-        select 
-            r.id, 
-            r.name, 
-            r.image_url, 
-            max(case when is_empty_search_term then null 
-                 else similarity(r.name, search_term) 
-            end) as recipe_sim_score,
-            max(case when is_empty_search_term then null 
-                 else similarity(i.name, search_term) 
-            end) as ingredient_sim_score
-        from recipes r
-        left join recipes_categories rc on r.id = rc.recipe_id
-        left join recipes_ingredients ri on r.id = ri.recipe_id
-        left join ingredients i on ri.ingredient_id = i.id
-        where 
-            (is_empty_categories or rc.category_id = any(category_ids))
-            and (
-                is_empty_search_term 
-                or position(search_term in r.name) > 0
-                or r.name % search_term
-                or i.name % search_term
-            )
+      select 
+          r.id, 
+          r.name, 
+          r.image_url,
+          max(case when ' || is_empty_search_term || ' then null 
+              else similarity(r.name, ' || quote_literal(search_term) || ') 
+          end) as recipe_sim_score,
+          max(case when ' || is_empty_search_term || ' then null 
+              else similarity(i.name, ' || quote_literal(search_term) || ') 
+          end) as ingredient_sim_score
+      from recipes r
+        ' || join_statements || '
+        ' || where_condition || ' 
         group by r.id, r.name, r.image_url
     ),
+    -- Order the fetched recipes alphabetically and based on the similarity scores. Recipe names with a certain term take priority with ingredients with the same name
     ordered_recipes as (
         select 
             id, 
@@ -69,37 +119,39 @@ begin
             recipe_sim_score desc,
             ingredient_sim_score desc,
             name asc
-        limit page_size
-        offset (page_number - 1) * page_size
+        limit ' || page_size || '
+        offset (' || page_number || ' - 1) * ' || page_size || '
     )
-    -- populate the recipes_result from the cte.
     select array_agg(row(id, name, image_url)::recipe_preview) 
-    into recipes_result
-    from ordered_recipes;
+    from ordered_recipes;';
 
+    -- Construct the dynamic query for calculating total count
+    count_query := '
     select count(distinct r.id)
-    into total_count
     from recipes r
-    left join recipes_categories rc on r.id = rc.recipe_id
-    left join recipes_ingredients ri on r.id = ri.recipe_id
-    left join ingredients i on ri.ingredient_id = i.id
-    where 
-        (is_empty_categories or rc.category_id = any(category_ids))
-        and (
-            is_empty_search_term 
-            or position(search_term in r.name) > 0
-            or r.name % search_term
-            or i.name % search_term
-        );
+    ' || join_statements || '
+    ' || where_condition || ';';
 
-    -- assign values to the custom return type: recipes_page_info.
-    page_info := row(
+    -- Execute the dynamic query for fetching recipes
+    EXECUTE recipes_query INTO recipes_result;
+
+    -- Execute the dynamic query for calculating total count
+    EXECUTE count_query INTO total_count;
+
+    -- Construct the dynamic query for calculating total count
+    count_query := '
+    select count(distinct r.id)
+    from recipes r
+    ' || join_statements || '
+    ' || where_condition || ';';
+
+    -- Assign and return page_info
+    page_info := ROW(
         recipes_result, 
         total_count, 
         total_count > page_size * page_number
     )::recipes_page_info;
 
-    -- return the computed page info.
-    return page_info;
+    RETURN page_info;
 end;
 $$ language plpgsql;
