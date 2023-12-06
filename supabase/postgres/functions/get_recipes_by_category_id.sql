@@ -43,30 +43,26 @@ declare
     join_statements text := '';
     where_condition text :='';
 begin
-    raise log 'category_groups %', category_groups;
-    raise log 'is_empty_categories %', is_empty_categories;
-    if not count_only then
-        -- Constructing filter logic based on category groups
-        if not is_empty_categories then
-            for i in 1..jsonb_array_length(category_groups) loop
-                subcategories := category_groups->(i-1);
-                subquery := 'select recipe_id from recipes_categories where category_id in (';
+    -- Constructing filter logic based on category groups
+    if not is_empty_categories then
+        for i in 1..jsonb_array_length(category_groups) loop
+            subcategories := category_groups->(i-1);
+            subquery := 'select recipe_id from recipes_categories where category_id in (';
 
-                for j in 1..jsonb_array_length(subcategories) loop
-                    subquery := subquery || quote_literal(subcategories->>j-1);
-                    if j < jsonb_array_length(subcategories) then
-                        subquery := subquery || ', ';
-                    end if;
-                end loop;
-
-                subquery := subquery || ')';
-                if i = 1 then
-                    category_condition := 'r.id in (' || subquery || ')';
-                else
-                    category_condition := category_condition || ' and r.id in (' || subquery || ')';
+            for j in 1..jsonb_array_length(subcategories) loop
+                subquery := subquery || quote_literal(subcategories->>j-1);
+                if j < jsonb_array_length(subcategories) then
+                    subquery := subquery || ', ';
                 end if;
             end loop;
-        end if;
+
+            subquery := subquery || ')';
+            if i = 1 then
+                category_condition := 'r.id in (' || subquery || ')';
+            else
+                category_condition := category_condition || ' and r.id in (' || subquery || ')';
+            end if;
+        end loop;
     end if;
 
     -- Join statements for the main query and the total count
