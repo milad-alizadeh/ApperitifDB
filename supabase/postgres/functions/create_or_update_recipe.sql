@@ -13,14 +13,15 @@ begin
 
     -- insert or update the recipe
     if is_new_recipe then
-        insert into recipes (name, image_url, description)
-        values (payload ->> 'name', payload ->> 'imageUrl', payload ->> 'description')
+        insert into recipes (name, image_url, description, is_draft)
+        values (payload ->> 'name', payload ->> 'imageUrl', payload ->> 'description', (payload ->> 'isDraft')::boolean)
         returning recipes.id into v_recipe_id; -- use the renamed variable
     else
         v_recipe_id := (payload ->> 'id')::uuid; -- use the renamed variable
         update recipes
         set name = payload ->> 'name',
             image_url = payload ->> 'imageUrl',
+            is_draft = (payload ->> 'isDraft')::boolean,
             description = payload ->> 'description'
         where recipes.id = v_recipe_id; -- use the renamed variable
     end if;

@@ -5,11 +5,11 @@ drop policy if exists "Recipes are viewable by everyone." on recipes;
 create policy "Recipes are viewable by everyone." on recipes for
 select
   to authenticated,
-  anon using (true);
+  anon using (recipes.is_draft = false);
 
 drop policy if exists "Recipes are editable by admin users." on recipes;
 
-create policy "Recipes are editable by admin users" on recipes for all to authenticated using (
+create policy "Recipes are editable by admin users." on recipes for all to authenticated using (
   exists (
     select
       1
