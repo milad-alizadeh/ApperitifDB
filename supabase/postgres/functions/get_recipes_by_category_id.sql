@@ -76,17 +76,17 @@ begin
     where_condition := 'where ';
     
     if not is_empty_categories then
-        where_condition := where_condition || category_condition || ' and ';
-    end if;
-
-    if is_empty_categories then
-        where_condition := where_condition || '(' || 
-            'position(' || quote_literal(search_term) || ' in r.name) > 0 or ' ||
-            'r.name % ' || quote_literal(search_term) || ' or ' ||
-            'i.name % ' || quote_literal(search_term) || ') ';
+            where_condition := where_condition || category_condition || ' and ';
     else
         where_condition := rtrim(where_condition, ' and ');
     end if;
+
+    where_condition := where_condition || '(' || 
+        'position(' || quote_literal(search_term) || ' in r.name) > 0 or ' ||
+        'r.name % ' || quote_literal(search_term) || ' or ' ||
+        'i.name % ' || quote_literal(search_term) || ') ';
+
+    raise log 'where_condition %', where_condition;
 
     if not count_only then
         -- Construct the full dynamic query
