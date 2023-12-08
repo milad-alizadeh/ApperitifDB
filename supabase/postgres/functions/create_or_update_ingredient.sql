@@ -17,7 +17,7 @@ begin
         v_ingredient_id := (payload ->> 'id')::uuid;
         update ingredients
         set name = payload ->> 'name',
-            description = payload ->> 'description'
+            description = payload ->> 'description',
             is_draft = (payload ->> 'isDraft')::boolean
         where ingredients.id = v_ingredient_id;
     end if;
