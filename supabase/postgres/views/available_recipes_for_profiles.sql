@@ -1,7 +1,9 @@
 drop view if exists available_recipes_for_profiles;
 
 create view
-  available_recipes_for_profiles as
+  available_recipes_for_profiles
+with
+  (security_invoker) as
 with
   total_ingredients as (
     select
