@@ -5,7 +5,7 @@ drop policy if exists "Ingredients are viewable by everyone." on ingredients;
 create policy "Ingredients are viewable by everyone." on ingredients for
 select
   to authenticated,
-  anon using (ingredients.is_draft = false);
+  anon using (recipes.is_draft = false);
 
 drop policy if exists "Ingredients are editable by admin users." on ingredients;
 
