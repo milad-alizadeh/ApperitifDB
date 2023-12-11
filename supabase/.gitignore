@@ -6,3 +6,4 @@
 .branches
 .temp
 .env
+.env.local

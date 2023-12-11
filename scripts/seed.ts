@@ -150,7 +150,7 @@ async function seedCategories(
 async function seedContent(parentCategories): Promise<void> {
   // Seed with the order of Top Picks, Mood, Base Spirit, Flavour
   const homeContent = {
-    categories: [
+    category_ids: [
       parentCategories[3].id,
       parentCategories[0].id,
       parentCategories[2].id,
@@ -159,7 +159,7 @@ async function seedContent(parentCategories): Promise<void> {
   }
 
   const filterContent = {
-    filters: [
+    category_ids: [
       parentCategories[0].id,
       parentCategories[2].id,
       parentCategories[1].id,
