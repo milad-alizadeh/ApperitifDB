@@ -62,7 +62,7 @@ select
   t.total_required_count,
   m.matched_ingredients_count = t.total_required_count as is_total_match,
   case
-    when t.total_required_count - m.matched_ingredients_count < 2 then true
+    when t.total_required_count - m.matched_ingredients_count <= 2 then true
     else false
   end as can_almost_make,
   mid.missing_ingredients
