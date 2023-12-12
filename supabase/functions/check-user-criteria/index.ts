@@ -3,26 +3,13 @@ import { uniqBy } from 'https://raw.githubusercontent.com/lodash/lodash/4.17.21-
 
 const POSTHOG_API_KEY = Deno.env.get('POSTHOG_API_KEY') as string
 const POSTHOG_DOMAIN = Deno.env.get('POSTHOG_DOMAIN') as string
-const POSTHOG_PRODUCTION_PROJECT_ID = Deno.env.get(
-  'POSTHOG_PRODUCTION_PROJECT_ID',
-) as string
-const POSTHOG_STAGING_PROJECT_ID = Deno.env.get(
-  'POSTHOG_STAGING_PROJECT_ID',
-) as string
+const POSTHOG_PROJECT_ID = Deno.env.get('POSTHOG_PROJECT_ID') as string
 
-async function queryPosthog(
-  query: { [key: string]: any },
-  environment: string,
-): Promise<any> {
-  const projectId =
-    environment === 'production'
-      ? POSTHOG_PRODUCTION_PROJECT_ID
-      : POSTHOG_STAGING_PROJECT_ID
-
+async function queryPosthog(query: { [key: string]: any }): Promise<any> {
   try {
     const params = new URLSearchParams(query)
     const response = await fetch(
-      `${POSTHOG_DOMAIN}/api/projects/${projectId}/events/?${params.toString()}`,
+      `${POSTHOG_DOMAIN}/api/projects/${POSTHOG_PROJECT_ID}/events/?${params.toString()}`,
       {
         method: 'get',
         headers: {
@@ -40,10 +27,7 @@ async function queryPosthog(
   }
 }
 
-async function getUserEvents(
-  userId: string,
-  environment: string,
-): Promise<any> {
+async function getUserEvents(userId: string): Promise<any> {
   const recipeViewQuery = {
     distinct_id: userId,
     event: '$screen',
@@ -57,7 +41,7 @@ async function getUserEvents(
     ]),
   }
 
-  const recipeViews = await queryPosthog(recipeViewQuery, environment)
+  const recipeViews = await queryPosthog(recipeViewQuery)
   const uniqueRecipeViews = uniqBy(
     recipeViews,
     ({ properties }: any) => properties.recipe_name,
@@ -67,7 +51,7 @@ async function getUserEvents(
     distinct_id: userId,
     event: 'add_ingredients:ingredient_add',
   }
-  const ingredientAdd = await queryPosthog(ingredientAddQuery, environment)
+  const ingredientAdd = await queryPosthog(ingredientAddQuery)
   const uniqueIngredientAdd = uniqBy(
     ingredientAdd,
     ({ properties }: any) => properties.ingredient_name,
@@ -79,14 +63,8 @@ async function getUserEvents(
   }
 }
 
-async function checkUserCriteria(
-  userId: string,
-  environment: string,
-): Promise<boolean> {
-  const { recipeViews, ingredientAdd } = await getUserEvents(
-    userId,
-    environment,
-  )
+async function checkUserCriteria(userId: string): Promise<boolean> {
+  const { recipeViews, ingredientAdd } = await getUserEvents(userId)
 
   console.log('recipeViews', recipeViews)
   console.log('ingredientAdd', ingredientAdd)
@@ -104,17 +82,13 @@ Deno.serve(async (req: any) => {
       return new Response('ok', { headers: corsHeaders })
     }
 
-    const { userId, environment } = await req.json()
+    const { userId } = await req.json()
 
     if (!userId) {
       return new Response('User ID is required', { status: 400 })
     }
 
-    if (!environment) {
-      return new Response('Environment is required', { status: 400 })
-    }
-
-    const meetsCriteria = await checkUserCriteria(userId, environment)
+    const meetsCriteria = await checkUserCriteria(userId)
 
     return new Response(JSON.stringify({ showFeedbackWidget: meetsCriteria }), {
       status: 200,
