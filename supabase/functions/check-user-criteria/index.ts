@@ -3,8 +3,8 @@ import { uniqBy } from 'https://raw.githubusercontent.com/lodash/lodash/4.17.21-
 
 const POSTHOG_API_KEY = Deno.env.get('POSTHOG_API_KEY') as string
 const POSTHOG_DOMAIN = Deno.env.get('POSTHOG_DOMAIN') as string
-const POSTHOG_PRODUCION_PROJECT_ID = Deno.env.get(
-  'POSTHOG_PRODUCION_PROJECT_ID',
+const POSTHOG_PRODUCTION_PROJECT_ID = Deno.env.get(
+  'POSTHOG_PRODUCTION_PROJECT_ID',
 ) as string
 const POSTHOG_STAGING_PROJECT_ID = Deno.env.get(
   'POSTHOG_STAGING_PROJECT_ID',
@@ -16,7 +16,7 @@ async function queryPosthog(
 ): Promise<any> {
   const projectId =
     environment === 'production'
-      ? POSTHOG_PRODUCION_PROJECT_ID
+      ? POSTHOG_PRODUCTION_PROJECT_ID
       : POSTHOG_STAGING_PROJECT_ID
 
   try {
