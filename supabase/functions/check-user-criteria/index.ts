@@ -91,10 +91,10 @@ async function checkUserCriteria(
   console.log('recipeViews', recipeViews)
   console.log('ingredientAdd', ingredientAdd)
 
-  const hasViewedRecipe = recipeViews > 6
-  const hasAddedIngredient = ingredientAdd > 3
-
-  return hasViewedRecipe && hasAddedIngredient
+  const hasViewedRecipe = recipeViews >= 10
+  const hasAddedIngredient = ingredientAdd >= 5
+  // Check if user has viewed at least 10 recipes or added at least 5 ingredients
+  return hasViewedRecipe || hasAddedIngredient
 }
 
 Deno.serve(async (req: any) => {
