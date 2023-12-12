@@ -34,7 +34,6 @@ async function queryPosthog(
 
     const data = await response.json()
 
-    console.log('Posthog response:', data)
     return data.results
   } catch (error) {
     console.error('Error fetching user events:', error)
@@ -57,6 +56,7 @@ async function getUserEvents(
       },
     ]),
   }
+
   const recipeViews = await queryPosthog(recipeViewQuery, environment)
   const uniqueRecipeViews = uniqBy(
     recipeViews,
@@ -65,7 +65,7 @@ async function getUserEvents(
 
   const ingredientAddQuery = {
     distinct_id: userId,
-    event: 'recipe:ingredient_details_press',
+    event: 'ingredient:ingredient_add',
   }
   const ingredientAdd = await queryPosthog(ingredientAddQuery, environment)
   const uniqueIngredientAdd = uniqBy(
@@ -88,6 +88,9 @@ async function checkUserCriteria(
     environment,
   )
 
+  console.log('recipeViews', recipeViews)
+  console.log('ingredientAdd', ingredientAdd)
+
   const hasViewedRecipe = recipeViews > 6
   const hasAddedIngredient = ingredientAdd > 3
 
@@ -102,8 +105,6 @@ Deno.serve(async (req: any) => {
     }
 
     const { userId, environment } = await req.json()
-
-    console.log('Checking user criteria for user ID:', userId, environment)
 
     if (!userId) {
       return new Response('User ID is required', { status: 400 })
