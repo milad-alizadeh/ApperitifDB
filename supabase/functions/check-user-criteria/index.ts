@@ -65,7 +65,7 @@ async function getUserEvents(
 
   const ingredientAddQuery = {
     distinct_id: userId,
-    event: 'ingredient:ingredient_add',
+    event: 'add_ingredients:ingredient_add',
   }
   const ingredientAdd = await queryPosthog(ingredientAddQuery, environment)
   const uniqueIngredientAdd = uniqBy(
