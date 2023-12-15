@@ -7,6 +7,7 @@ export const recipes = pgTable('recipes', {
   imageUrl: text('image_url'),
   description: text('description'),
   isDraft: boolean('is_draft').default(false),
+  isPitcher: boolean('is_pitcher').default(false),
   createdAt,
   updatedAt,
 })
