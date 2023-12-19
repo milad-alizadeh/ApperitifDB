@@ -1,6 +1,6 @@
 -- set the similarity threshold for pg_trgm
 set
-  pg_trgm.similarity_threshold = 0.1;
+  pg_trgm.similarity_threshold = 1;
 
 -- drop the function if it already exists
 drop function if exists get_recipes_by_category_ids (text, uuid[], int, int) cascade;
@@ -82,10 +82,10 @@ begin
   end if;
 
   where_condition := where_condition || '(' || 
-      'position(' || quote_literal(search_term) || ' in r.name) > 0 or ' ||
       'r.name % ' || quote_literal(search_term) || ' or ' ||
-      'i.name % ' || quote_literal(search_term) || ' or ' ||
-      'unaccent(i.description) ilike ' || quote_literal('%' || search_term || '%') || ') ';
+      'unaccent(r.name) ilike ' || quote_literal('%' || search_term || '%') || ' or ' ||
+      'unaccent(i.description) ilike ' || quote_literal('%' || search_term || '%') || ' or ' || 
+      'unaccent(i.name) ilike ' || quote_literal('%' || search_term || '%') || ') ';
 
   raise log 'where_condition %', where_condition;
 
