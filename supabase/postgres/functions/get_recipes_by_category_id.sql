@@ -73,20 +73,21 @@ begin
     ';
 
     -- Where condition
-    where_condition := 'where ';
-    
-    if not is_empty_categories then
-            where_condition := where_condition || category_condition || ' and ';
-    else
-        where_condition := rtrim(where_condition, ' and ');
-    end if;
+  where_condition := 'where ';
 
-    where_condition := where_condition || '(' || 
-        'position(' || quote_literal(search_term) || ' in r.name) > 0 or ' ||
-        'r.name % ' || quote_literal(search_term) || ' or ' ||
-        'i.name % ' || quote_literal(search_term) || ') ';
+  if not is_empty_categories then
+          where_condition := where_condition || category_condition || ' and ';
+  else
+      where_condition := rtrim(where_condition, ' and ');
+  end if;
 
-    raise log 'where_condition %', where_condition;
+  where_condition := where_condition || '(' || 
+      'position(' || quote_literal(search_term) || ' in r.name) > 0 or ' ||
+      'r.name % ' || quote_literal(search_term) || ' or ' ||
+      'i.name % ' || quote_literal(search_term) || ' or ' ||
+      'unaccent(i.description) ilike ' || quote_literal('%' || search_term || '%') || ') ';
+
+  raise log 'where_condition %', where_condition;
 
     if not count_only then
         -- Construct the full dynamic query
@@ -102,7 +103,10 @@ begin
             end) as recipe_sim_score,
             max(case when ' || is_empty_search_term || ' then null 
                 else similarity(i.name, ' || quote_literal(search_term) || ') 
-            end) as ingredient_sim_score
+            end) as ingredient_sim_score,
+            max(case when ' || is_empty_search_term || ' then null 
+                else similarity(i.description, ' || quote_literal(search_term) || ') 
+            end) as ingredient_desc_sim_score
         from recipes r
             ' || join_statements || '
             ' || where_condition || ' 
@@ -118,6 +122,7 @@ begin
             order by         
                 recipe_sim_score desc,
                 ingredient_sim_score desc,
+                ingredient_desc_sim_score desc,
                 name asc
             limit ' || page_size || '
             offset (' || page_number || ' - 1) * ' || page_size || '
