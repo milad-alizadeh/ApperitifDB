@@ -7,11 +7,9 @@ export const ingredientBrands = pgTable('ingredient_brands', {
   name: text('name').notNull(),
   description: text('description'),
   url: text('url'),
-  ingredientId: uuid('ingredient_id')
-    .references(() => ingredients.id, {
-      onDelete: 'cascade',
-    })
-    .notNull(),
+  ingredientId: uuid('ingredient_id').references(() => ingredients.id, {
+    onDelete: 'cascade',
+  }),
   createdAt,
   updatedAt,
 })
