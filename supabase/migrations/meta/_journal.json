@@ -211,6 +211,13 @@
       "when": 1702683672413,
       "tag": "0029_broad_wolf_cub",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "5",
+      "when": 1703167593732,
+      "tag": "0030_orange_leopardon",
+      "breakpoints": true
     }
   ]
 }
