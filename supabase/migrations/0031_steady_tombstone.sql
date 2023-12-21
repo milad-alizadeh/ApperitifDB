@@ -1,0 +1,1 @@
+ALTER TABLE "ingredient_brands" ALTER COLUMN "ingredient_id" DROP NOT NULL;
