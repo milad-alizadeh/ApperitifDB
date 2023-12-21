@@ -28,7 +28,7 @@ begin
         delete from ingredients_categories where ingredients_categories.ingredient_id = v_ingredient_id;
         update ingredient_brands 
         set ingredient_id = null
-        where ingredient_brands.id = (ingredient_brand ->> 'id')::uuid;
+        where ingredient_brands.ingredient_id = v_ingredient_id;
     end if;
 
     -- insert ingredient categories
