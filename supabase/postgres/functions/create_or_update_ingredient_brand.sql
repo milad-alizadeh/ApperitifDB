@@ -15,7 +15,7 @@ begin
             payload ->> 'name', 
             payload ->> 'description', 
             payload ->> 'url',
-            payload ->> 'ingredient_id'
+            (payload -> 'ingredient' ->> 'id')::uuid
         )
         returning ingredient_brands.id into v_ingredient_brand_id;
     else
@@ -24,9 +24,11 @@ begin
         set name = payload ->> 'name',
             description = payload ->> 'description',
             url = payload ->> 'url',
-            ingredient_id = payload ->> 'ingredient_id'
+            ingredient_id = (payload -> 'ingredient' ->> 'id')::uuid
         where ingredient_brands.id = v_ingredient_brand_id;
     end if;
+
+    return v_ingredient_brand_id;
 
 exception
     when others then
