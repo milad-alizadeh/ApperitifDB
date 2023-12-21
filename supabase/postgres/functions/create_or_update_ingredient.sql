@@ -4,6 +4,7 @@ declare
     v_ingredient_id uuid; -- renamed ingredient_id to avoid conflict with column names
     is_new_ingredient boolean;
     ingredient_category json;
+    ingredient_brand json;
 begin
     -- determine if it's a new ingredient or an update
     is_new_ingredient := (payload ->> 'id') is null;
@@ -25,6 +26,9 @@ begin
     -- delete existing relations if it's an update
     if not is_new_ingredient then
         delete from ingredients_categories where ingredients_categories.ingredient_id = v_ingredient_id;
+        update ingredient_brands 
+        set ingredient_id = null
+        where ingredient_brands.id = (ingredient_brand ->> 'id')::uuid;
     end if;
 
     -- insert ingredient categories
@@ -35,6 +39,14 @@ begin
                 v_ingredient_id,
                 (ingredient_category ->> 'id')::uuid
               );
+    end loop;
+
+    -- update ingredient brands
+    for ingredient_brand in select * from json_array_elements(payload -> 'ingredientBrands')
+    loop
+        update ingredient_brands 
+        set ingredient_id = v_ingredient_id
+        where ingredient_brands.id = (ingredient_brand ->> 'id')::uuid;
     end loop;
 
     return v_ingredient_id;
